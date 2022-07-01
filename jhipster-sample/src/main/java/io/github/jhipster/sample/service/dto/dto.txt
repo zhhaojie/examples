@@ -1,0 +1,6 @@
+dto（data transfer object）是在服务层。 数据就是从service这个地方进来或出去的。
+
+service实际上操作的是entity。 而entity与持久化、Table这些是绑定的。
+
+DTOs (Data Transfer Objects) are in the service layer: they are here to get data out of the transactional layer. The idea is that inside the service layer you have JPA entities, which have relationships (lazy loaded with Hibernate), and that the service layer returns DTOs which are not managed by Hibernate (no lazy loading anymore). There might not be a 1-to-1 relationship between entities and DTOs: maybe DTOs aggregate several entities, maybe they have more fields (or less fields!), that all depends on your business model.
+

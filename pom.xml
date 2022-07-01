@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zhouhaojie</groupId>
+    <artifactId>examples</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <description>examples</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
+    <modules>
+<!--        <module>easyexcel-example</module>-->
+<!--        <module>jhipster-sample</module>-->
+<!--        <module>multi-datasource-jpa-example</module>-->
+<!--        <module>multi-datasource-jdbc-example</module>-->
+<!--        <module>spring-data-jdbc-example</module>-->
+        <module>spring-data-redis-example</module>
+        <module>spring-resource-io-example</module>
+    </modules>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

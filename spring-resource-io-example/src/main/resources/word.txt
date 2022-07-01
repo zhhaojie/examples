@@ -1,0 +1,7 @@
+easyexcel-example
+jhipster-sample
+multi-datasource-jdbc-example
+multi-datasource-jpa-example
+spring-data-jdbc-example
+spring-data-redis-example
+spring-resource-io-example

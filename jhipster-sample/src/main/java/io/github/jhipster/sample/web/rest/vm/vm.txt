@@ -1,0 +1,6 @@
+VM （view model） 视图层。 这个词为了适应从vue、angular、reactjs的数据处理。
+一个dto可能会切分成不同的视图展示。
+
+如果当前应用不是h5，ios，android进行交互。VM其实是没有必要存在的。
+
+VMs (View Models) are in view layer. This wording comes from Angular, where we often have "vm" objects. The idea is to have objects which are specific to your view layer, so it's easier, more secured and more performant to code the client application. There could be several VMs for one DTOs, as the DTO's data might be used in several different screens. Typically VMs are what is being transferred in JSON from the Java back-end to the JavaScript front-end.
