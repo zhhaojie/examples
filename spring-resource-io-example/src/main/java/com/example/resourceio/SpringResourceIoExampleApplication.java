@@ -1,12 +1,10 @@
-package com.example.springresourceioexample;
+package com.example.resourceio;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileUrlResource;
-import org.springframework.core.io.PathResource;
 
 import javax.annotation.Resource;
 import java.io.BufferedReader;

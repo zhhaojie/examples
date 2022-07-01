@@ -13,11 +13,10 @@
     </properties>
 
     <modules>
-<!--        <module>easyexcel-example</module>-->
-<!--        <module>jhipster-sample</module>-->
-<!--        <module>multi-datasource-jpa-example</module>-->
-<!--        <module>multi-datasource-jdbc-example</module>-->
-<!--        <module>spring-data-jdbc-example</module>-->
+        <module>jhipster-sample</module>
+        <module>multi-datasource-jpa-example</module>
+        <module>multi-datasource-jdbc-example</module>
+        <module>spring-data-jdbc-example</module>
         <module>spring-data-redis-example</module>
         <module>spring-resource-io-example</module>
     </modules>

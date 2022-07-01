@@ -1,4 +1,4 @@
-package com.example.springresourceioexample;
+package com.example.resourceio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
