@@ -1,4 +1,4 @@
-package demo.order.domain;
+package example.order.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

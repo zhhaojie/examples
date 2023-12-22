@@ -1,7 +1,7 @@
-package demo.order;
+package example.order;
 
 import com.zaxxer.hikari.HikariDataSource;
-import demo.order.domain.Order;
+import example.order.domain.Order;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;

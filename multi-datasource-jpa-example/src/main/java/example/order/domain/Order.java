@@ -1,4 +1,4 @@
-package demo.order.domain;
+package example.order.domain;
 
 import java.io.Serializable;
 import java.util.Date;

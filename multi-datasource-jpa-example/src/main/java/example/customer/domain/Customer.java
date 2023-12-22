@@ -1,4 +1,4 @@
-package demo.customer.domain;
+package example.customer.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;

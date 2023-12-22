@@ -1,7 +1,7 @@
-package demo.customer;
+package example.customer;
 
 import com.zaxxer.hikari.HikariDataSource;
-import demo.customer.domain.Customer;
+import example.customer.domain.Customer;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
