@@ -4,12 +4,22 @@
     <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
+      <option name="url" value="http://nexus3.juhesaas.com/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
       <option name="url" value="https://maven.aliyun.com/repository/public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="public" />
       <option name="name" value="public" />
       <option name="url" value="http://nexus.iboxpay.com/repository/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="public" />
+      <option name="name" value="public" />
+      <option name="url" value="http://nexus3.juhesaas.com/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />

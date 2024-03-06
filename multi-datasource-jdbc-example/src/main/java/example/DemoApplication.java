@@ -1,7 +1,7 @@
-package demo;
+package example;
 
-import demo.customer.domain.CustomerRepository;
-import demo.order.domain.OrderRepository;
+import example.customer.domain.CustomerRepository;
+import example.order.domain.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
