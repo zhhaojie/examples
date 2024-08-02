@@ -1,4 +1,4 @@
-package demo.customer.domain;
+package example.customer.domain;
 
 
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
 
-@Table("CUSTOMER")
+@Table("customer")
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package demo.order.domain;
+package example.order.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-@Table("CUSTOMER_ORDER")
+@Table("customer_order")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;

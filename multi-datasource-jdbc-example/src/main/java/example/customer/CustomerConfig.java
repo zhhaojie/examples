@@ -1,8 +1,9 @@
-package demo.customer;
+package example.customer;
 
 import com.zaxxer.hikari.HikariDataSource;
-import demo.customer.domain.Customer;
+import example.customer.domain.Customer;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -23,34 +24,31 @@ import javax.sql.DataSource;
 )
 public class CustomerConfig {
 
+
     @Bean
-    @ConfigurationProperties(prefix = "customers.spring.datasource.hikari")
-    public HikariDataSource customerDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+    @ConfigurationProperties("spring.datasource.customers")
+    public DataSourceProperties customersDataSourceProperties() {
+        return new DataSourceProperties();
     }
 
+    @Bean
+    public DataSource customersDataSource() {
+        return customersDataSourceProperties()
+                .initializeDataSourceBuilder()
+                .build();
+    }
+
+
     @Bean(name = "customerTransactionManager")
-    JdbcTransactionManager customerTransactionManager(@Qualifier("customerDataSource") DataSource dataSource) {
+    JdbcTransactionManager customerTransactionManager(@Qualifier("customersDataSource") DataSource dataSource) {
         return new JdbcTransactionManager(dataSource);
     }
 
     @Primary
     @Bean(name = "customerJdbcOperations")
-    NamedParameterJdbcOperations customerJdbcOperations(@Qualifier("customerDataSource") DataSource dataSource) {
+    NamedParameterJdbcOperations customerJdbcOperations(@Qualifier("customersDataSource") DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
-
-//    @Bean
-//    DataSourceInitializer customerDataSourceInitializer(@Qualifier("customerDataSource") DataSource dataSource) {
-//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-//        resourceDatabasePopulator.addScript(new ClassPathResource("customer.schema-h2.sql"));
-//
-//        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-//        dataSourceInitializer.setDataSource(dataSource);
-//        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-//        dataSourceInitializer.afterPropertiesSet();
-//        return dataSourceInitializer;
-//    }
 
 }

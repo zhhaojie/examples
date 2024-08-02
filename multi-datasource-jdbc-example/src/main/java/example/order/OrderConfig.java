@@ -1,8 +1,9 @@
-package demo.order;
+package example.order;
 
 import com.zaxxer.hikari.HikariDataSource;
-import demo.order.domain.Order;
+import example.order.domain.Order;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -22,32 +23,29 @@ import javax.sql.DataSource;
 )
 public class OrderConfig {
 
+
     @Bean
-    @ConfigurationProperties(prefix = "orders.spring.datasource.hikari")
-    HikariDataSource orderDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+    @ConfigurationProperties("spring.datasource.orders")
+    public DataSourceProperties ordersDataSourceProperties() {
+        return new DataSourceProperties();
     }
 
+    @Bean
+    public DataSource ordersDataSource() {
+        return ordersDataSourceProperties()
+                .initializeDataSourceBuilder()
+                .build();
+    }
+
+
     @Bean(name = "orderTransactionManager")
-    JdbcTransactionManager orderTransactionManager(@Qualifier("orderDataSource") DataSource dataSource) {
+    JdbcTransactionManager orderTransactionManager(@Qualifier("ordersDataSource") DataSource dataSource) {
         return new JdbcTransactionManager(dataSource);
     }
 
     @Bean(name = "orderJdbcOperations")
-    NamedParameterJdbcOperations orderJdbcOperations(@Qualifier("orderDataSource") DataSource dataSource) {
+    NamedParameterJdbcOperations orderJdbcOperations(@Qualifier("ordersDataSource") DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
-
-//    @Bean
-//    DataSourceInitializer orderDataSourceInitializer(@Qualifier("orderDataSource") DataSource dataSource) {
-//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-//        resourceDatabasePopulator.addScript(new ClassPathResource("order.schema-h2.sql"));
-//
-//        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-//        dataSourceInitializer.setDataSource(dataSource);
-//        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-//        dataSourceInitializer.afterPropertiesSet();
-//        return dataSourceInitializer;
-//    }
 
 }
