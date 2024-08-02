@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.minidev.json.JSONObject;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -13,10 +14,19 @@ import java.io.IOException;
 
 public class CustomSavedRequestAwareAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
+
+    public CustomSavedRequestAwareAuthenticationSuccessHandler(OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
+        this.oAuth2AuthorizedClientService = oAuth2AuthorizedClientService;
+    }
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
             OAuth2User oauthUser = oauthToken.getPrincipal();
+
+            // github
+            String authorizedClientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
 
             // 获取用户的公开信息
             String username = oauthUser.getAttribute("login"); // GitHub 用户名

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.qimiao</groupId>
-	<artifactId>social</artifactId>
+	<artifactId>spring-security-social-login</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security-social-login</name>
+	<name>social</name>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
