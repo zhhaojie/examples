@@ -2,7 +2,6 @@ package example;
 
 import example.customer.domain.CustomerRepository;
 import example.order.domain.OrderRepository;
-import jakarta.annotation.Resource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

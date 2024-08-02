@@ -1,4 +1,4 @@
-package demo.mcht;
+package example.mcht;
 
 import lombok.ToString;
 import org.springframework.data.annotation.Id;

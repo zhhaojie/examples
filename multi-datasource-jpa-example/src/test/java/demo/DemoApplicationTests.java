@@ -6,10 +6,10 @@ import java.util.Date;
 
 import javax.sql.DataSource;
 
-import demo.customer.domain.Customer;
-import demo.customer.domain.CustomerRepository;
-import demo.order.domain.Order;
-import demo.order.domain.OrderRepository;
+import example.customer.domain.Customer;
+import example.customer.domain.CustomerRepository;
+import example.order.domain.Order;
+import example.order.domain.OrderRepository;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
