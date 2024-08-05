@@ -8,26 +8,23 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Events;
 import jakarta.annotation.Resource;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
-
 @Service
 public class GetEventsTask {
 
-    private static final String APPLICATION_NAME = "Your Application Name";
+    private static final String APPLICATION_NAME = "NBExampleApplication";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+
 
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
     @lombok.SneakyThrows
-    @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.SECONDS)
-    void getEvents() {
-
+  //  @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.SECONDS)
+    void doGetEvents() {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient("google", "115152964495372047642");
         if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
             return;
@@ -49,7 +46,7 @@ public class GetEventsTask {
                 .setMaxResults(10)
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
-                .execute();
+                . execute();
 
         events.getItems().forEach(event -> {
             System.out.printf("Event: %s (%s)\n", event.getSummary(), event.getStart().getDateTime());

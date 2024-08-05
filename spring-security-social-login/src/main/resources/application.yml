@@ -2,7 +2,8 @@ logging:
   level:
     org:
       springframework:
-        security: TRACE
+        security: info
+    com.google.api.client: trace
 spring:
   application:
     name: social
@@ -27,7 +28,9 @@ spring:
               - https://www.googleapis.com/auth/userinfo.profile
               - https://www.googleapis.com/auth/calendar
               - https://www.googleapis.com/auth/calendar.events
-              - offline
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline
   jpa:
     generate-ddl: true
     show-sql: true
