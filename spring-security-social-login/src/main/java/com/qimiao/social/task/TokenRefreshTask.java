@@ -3,6 +3,7 @@ package com.qimiao.social.task;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.UserCredentials;
 import jakarta.annotation.Resource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -11,22 +12,31 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
-public class AccessTokenTask {
+public class TokenRefreshTask {
 
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
-  //  @Scheduled(initialDelay = 1, fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(initialDelay = 1, fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     void doRefreshToken() {
+        // 周浩杰的账号token
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
                 "google", "115152964495372047642");
 
         if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getRefreshToken() == null) {
+            return;
+        }
+
+        // 提前十分钟更新
+        Instant expirationTime = Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt());
+        if (expirationTime.isAfter(Instant.now())) {
             return;
         }
 
@@ -40,16 +50,20 @@ public class AccessTokenTask {
             credentials.refreshIfExpired();
             AccessToken token = credentials.getAccessToken();
             // 有可能用户收回了授权, 从而无法拿到最新的数据.
-            if (token == null) {
-
+            if (token == null || token.getExpirationTime() == null) {
                 return;
             }
+
+            Instant expirationInstant = token.getExpirationTime().toInstant();
+
+            // 获取 oAuth2AuthorizedClient 的到期时间，并确保它不为 null
+            Instant oAuth2ExpirationInstant = Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt());
 
             OAuth2AccessToken updatedAccessToken = new OAuth2AccessToken(
                     oAuth2AuthorizedClient.getAccessToken().getTokenType(),
                     token.getTokenValue(),
-                    token.getExpirationTime().toInstant().minusMillis(token.getExpirationTime().getTime() - Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt()).toEpochMilli()),
-                    token.getExpirationTime().toInstant()
+                    expirationInstant.minusMillis(token.getExpirationTime().getTime() - oAuth2ExpirationInstant.toEpochMilli()),
+                    expirationInstant
             );
 
             OAuth2AuthorizedClient updatedClient = new OAuth2AuthorizedClient(

@@ -3,7 +3,7 @@ logging:
     org:
       springframework:
         security: info
-    com.google.api.client: trace
+    com.google.api.client: info
 spring:
   application:
     name: social

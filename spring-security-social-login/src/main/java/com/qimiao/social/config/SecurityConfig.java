@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/error").permitAll()
                         .requestMatchers("/favicon.ico", "/webjars/**").permitAll()
-                        .requestMatchers("/notifications").permitAll()
+                        .requestMatchers("/notifications/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
