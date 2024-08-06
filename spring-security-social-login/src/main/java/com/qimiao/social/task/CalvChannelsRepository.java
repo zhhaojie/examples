@@ -7,4 +7,5 @@ public interface CalvChannelsRepository extends ListCrudRepository<CalvChannelsE
 
     CalvChannelsEntity findByClientRegistrationIdAndAccountIdAndCalvId(String Client, String AccountId, String calvId);
 
+    CalvChannelsEntity findByChannelIdAndResourceId(String channelId, String resourceId);
 }

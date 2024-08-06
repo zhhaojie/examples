@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -38,8 +35,8 @@ public class CalvWatchTask {
     private CalvChannelsRepository calvChannelsRepository;
 
     @lombok.SneakyThrows
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
-    void doChannelWatch() {
+    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
+    void renewChannel() {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
                 "google", "115152964495372047642");
         if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
@@ -53,7 +50,7 @@ public class CalvWatchTask {
 
         CalvChannelsEntity activeChannel = calvChannelsRepository.findByClientRegistrationIdAndAccountIdAndCalvId("google", "115152964495372047642", "primary");
 
-        if (activeChannel == null || !activeChannel.nonExpired()) {
+        if (activeChannel == null || activeChannel.nonExpired()) {
             return;
         }
 
@@ -100,7 +97,7 @@ public class CalvWatchTask {
      * 这个动作由用户授权开始.默认就会产生一个订阅. (cozi 那边的话,与假期日历是相同的处理方法)
      */
     @EventListener(ApplicationReadyEvent.class)
-    void initChannelWatch() {
+    void initChannel() {
         long count = calvChannelsRepository.count();
         if (count > 0) {
             // 主要是做测试用的
@@ -110,9 +107,12 @@ public class CalvWatchTask {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
                 "google", "115152964495372047642");
 
+
         if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
             return;
         }
+
+        cleanChannels(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
 
         CalvChannelsEntity calvChannelsEntity = new CalvChannelsEntity();
         calvChannelsEntity.setId(TsidCreator.getTsid().toLong());
@@ -155,6 +155,34 @@ public class CalvWatchTask {
         } catch (IOException e) {
             log.error("calendar.events().watch:", e);
         }
+
+    }
+
+    void cleanChannels(String accessToken) {
+
+        Calendar calendar = new Calendar.Builder(
+                new NetHttpTransport(),
+                JSON_FACTORY,
+                new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(accessToken))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        List<String> deletedChannelIds = List.of("467a2bcc-d7c8-4620-8b7b-a7b6bd8f69b6",
+                "60b20392-219a-420a-b98d-fda5e75008f6",
+                "0ea37cee-163f-40a8-872c-1bd1e06fb648",
+                "fccf34dc-fc19-4b58-86c5-f398954bc105",
+                "b4659913-3b75-4241-bf21-030907d36dcb"
+        );
+
+        deletedChannelIds.forEach(id -> {
+            Channel c = new Channel();
+            c.setId(id);
+            try {
+                calendar.channels().stop(c);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        });
 
     }
 

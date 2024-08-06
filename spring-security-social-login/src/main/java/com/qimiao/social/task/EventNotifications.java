@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -38,6 +39,9 @@ public class EventNotifications {
     @Resource
     private OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
+    @Resource
+    private CalvChannelsRepository calvChannelsRepository;
+
     private final static Map<String, String> nextSyncToken4Resources = new HashMap<>();
 
     @PostMapping("/notifications/google")
@@ -50,11 +54,13 @@ public class EventNotifications {
         String resourceUri = request.getHeader("X-Goog-Resource-URI");
         String messageNumber = request.getHeader("X-Goog-Message-Number");
 
-        System.out.println("channelId: "+ channelId);
-        System.out.println("resourceId: "+ resourceId);
-        System.out.println("resourceState: "+ resourceState);
-        System.out.println("messageNumber: "+ messageNumber);
+        System.out.println("channelId: " + channelId);
+        System.out.println("resourceId: " + resourceId);
+        System.out.println("resourceState: " + resourceState);
+        System.out.println("messageNumber: " + messageNumber);
         System.out.println("-----------");
+
+        syncEvents(resourceUri, resourceId);
 
         return ResponseEntity.ok().build();
     }
@@ -64,16 +70,21 @@ public class EventNotifications {
         return null;
     }
 
-    void xx(String channelId, String resourceId) {
+    @Async
+    public void syncEvents(String channelId, String resourceId) {
+        CalvChannelsEntity channelsEntity = calvChannelsRepository.findByChannelIdAndResourceId(channelId, resourceId);
+        if (channelsEntity == null) {
+            return;
+        }
         try {
-            OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient("google", "115152964495372047642");
+            OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(channelsEntity.getClientRegistrationId(), channelsEntity.getAccountId());
             if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
                 return;
             }
             OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
             Instant expirationTime = Objects.requireNonNull(accessToken.getExpiresAt());
             if (expirationTime.isBefore(Instant.now())) {
-                log.warn("账号:{} token 已经超时. 等待token更新", "115152964495372047642");
+                log.warn("账号:{} token 已经超时. 等待token更新", channelsEntity.getAccountId());
                 return;
             }
             // Build the Calendar service
@@ -87,6 +98,7 @@ public class EventNotifications {
             String calendarId = "primary";
             String nextPageToken = null;
             String nextSyncToken = nextSyncToken4Resources.get(resourceId);
+
             do {
                 Events events;
                 if (nextSyncToken != null) {
@@ -112,12 +124,13 @@ public class EventNotifications {
                 nextPageToken = events.getNextPageToken();
                 nextSyncToken = events.getNextSyncToken();
             } while (nextPageToken != null);
-
             if (nextSyncToken != null) {
-                nextSyncToken4Resources.put(resourceId, nextSyncToken);
+                channelsEntity.setNextSyncToken(nextSyncToken);
+                calvChannelsRepository.save(channelsEntity);
             }
+
         } catch (IOException | GeneralSecurityException e) {
-            e.printStackTrace();  // Replace with a logger in a real application
+            log.error("syncEvents", e);
         }
     }
 }

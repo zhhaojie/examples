@@ -71,7 +71,7 @@ public class CalvChannelsEntity {
     private Instant lastSyncAt;
 
     public boolean nonExpired(){
-        return expireAt > System.currentTimeMillis();
+        return expireAt > Instant.now().toEpochMilli();
     }
 
 }
