@@ -20,33 +20,20 @@ public class SecurityConfig {
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
-//    @Bean
-//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .authorizeHttpRequests(authz -> {
-//                    authz.requestMatchers("/", "/error").permitAll();
-//                    authz.requestMatchers("/favicon.ico", "/webjars/**").permitAll();
-//                    authz.requestMatchers("/notifications").permitAll();
-//                    authz.anyRequest().authenticated();
-//                })
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .formLogin(form -> form.defaultSuccessUrl("/"))
-//                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomSavedRequestAwareAuthenticationSuccessHandler(oAuth2AuthorizedClientService)))
-//                .build();
-//    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/error").permitAll()
-                        .requestMatchers("/favicon.ico", "/webjars/**").permitAll()
-                        .requestMatchers("/notifications/**").permitAll()
-                        .anyRequest().permitAll()
-                )
-                .csrf(AbstractHttpConfigurer::disable);
-
-        return http.build();
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeHttpRequests(authz -> {
+                    authz
+                            .requestMatchers("/", "/error").permitAll()
+                            .requestMatchers("/favicon.ico", "/webjars/**").permitAll()
+                            .requestMatchers("/notifications/**").permitAll()
+                            .anyRequest().authenticated();
+                })
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form.defaultSuccessUrl("/"))
+                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomSavedRequestAwareAuthenticationSuccessHandler(oAuth2AuthorizedClientService)))
+                .build();
     }
 
     @Bean

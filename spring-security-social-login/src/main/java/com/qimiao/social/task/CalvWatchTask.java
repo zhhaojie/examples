@@ -22,17 +22,24 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 第二步: 订阅数据或更新订阅关系
+ */
 @Slf4j
 @Service
-public class CalvWatchTask {
+class CalvWatchTask {
     private static final String APPLICATION_NAME = "NBExampleApplication";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
     @Resource
-    private OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
+    OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
     @Resource
-    private CalvChannelsRepository calvChannelsRepository;
+    CustomOAuth2AuthorizedClientRepository customOAuth2AuthorizedClientRepository;
+
+    @Resource
+    CalvChannelsRepository calvChannelsRepository;
+
 
     @lombok.SneakyThrows
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
@@ -65,7 +72,7 @@ public class CalvWatchTask {
         Channel channel = new Channel()
                 .setId(UUID.randomUUID().toString()) // Unique identifier for the channel
                 .setType("web_hook")
-                .setAddress("https://96ef-113-104-190-29.ngrok-free.app/notifications")
+                .setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google")
                 .setParams(params)
                 .setExpiration(System.currentTimeMillis() + 7L * 24L * 60L * 60L * 1000L);
 
@@ -78,7 +85,7 @@ public class CalvWatchTask {
                 System.out.println("Watch Resource ID: " + channel1.getResourceId());
 
                 activeChannel.setChannelId(channel1.getId());
-                activeChannel.setAddress("https://96ef-113-104-190-29.ngrok-free.app/notifications");
+                activeChannel.setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google");
                 activeChannel.setResourceUri(channel1.getResourceUri());
                 activeChannel.setResourceId(channel1.getResourceId());
                 activeChannel.setExpireAt(channel1.getExpiration());
@@ -92,97 +99,63 @@ public class CalvWatchTask {
 
     }
 
-
-    /**
-     * 这个动作由用户授权开始.默认就会产生一个订阅. (cozi 那边的话,与假期日历是相同的处理方法)
-     */
     @EventListener(ApplicationReadyEvent.class)
     void initChannel() {
-        long count = calvChannelsRepository.count();
-        if (count > 0) {
-            // 主要是做测试用的
-            return;
-        }
+        List<OAuth2AuthorizedClientEntity> auth2AuthorizedClientEntities = customOAuth2AuthorizedClientRepository.findAll();
 
-        OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
-                "google", "115152964495372047642");
+        for (OAuth2AuthorizedClientEntity authorizedClient : auth2AuthorizedClientEntities) {
 
+            String accountId = authorizedClient.getId().getPrincipalName();
+            String clientRegistrationId = authorizedClient.getId().getClientRegistrationId();
+            String calvId = "primary";
 
-        if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
-            return;
-        }
-
-        cleanChannels(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
-
-        CalvChannelsEntity calvChannelsEntity = new CalvChannelsEntity();
-        calvChannelsEntity.setId(TsidCreator.getTsid().toLong());
-        calvChannelsEntity.setAccountId("115152964495372047642");
-        calvChannelsEntity.setCalvId("primary");
-        calvChannelsEntity.setClientRegistrationId("google");
-
-
-        Calendar calendar = new Calendar.Builder(
-                new NetHttpTransport(),
-                JSON_FACTORY,
-                new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(oAuth2AuthorizedClient.getAccessToken().getTokenValue()))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-
-        Map<String, String> params = new HashMap<>();
-        Channel channel = new Channel()
-                .setId(UUID.randomUUID().toString()) // Unique identifier for the channel
-                .setType("web_hook")
-                .setAddress("https://96ef-113-104-190-29.ngrok-free.app/notifications")
-                .setParams(params)
-                .setExpiration(System.currentTimeMillis() + 7L * 24L * 60L * 60L * 1000L);
-
-
-        try {
-            Channel channel1 = calendar.events().watch("primary", channel).execute();
-            if (channel1 != null && channel1.getId() != null) {
-                System.out.println("Watch Kind : " + channel1.getKind());
-                System.out.println("Watch Channel ID: " + channel1.getId());
-                System.out.println("Watch Resource ID: " + channel1.getResourceId());
-
-                calvChannelsEntity.setChannelId(channel1.getId());
-                calvChannelsEntity.setAddress("https://96ef-113-104-190-29.ngrok-free.app/notifications");
-                calvChannelsEntity.setResourceUri(channel1.getResourceUri());
-                calvChannelsEntity.setResourceId(channel1.getResourceId());
-                calvChannelsEntity.setExpireAt(channel1.getExpiration());
-                calvChannelsEntity.setRemark(channel1.getKind());
-                calvChannelsRepository.save(calvChannelsEntity);
+            CalvChannelsEntity primary = calvChannelsRepository.findByClientRegistrationIdAndAccountIdAndCalvId(clientRegistrationId, accountId, calvId);
+            if (primary != null) {
+                return;
             }
-        } catch (IOException e) {
-            log.error("calendar.events().watch:", e);
-        }
 
-    }
+            CalvChannelsEntity calvChannelsEntity = new CalvChannelsEntity();
+            calvChannelsEntity.setId(TsidCreator.getTsid().toLong());
+            calvChannelsEntity.setAccountId(accountId);
+            calvChannelsEntity.setCalvId(calvId);
+            calvChannelsEntity.setClientRegistrationId(clientRegistrationId);
 
-    void cleanChannels(String accessToken) {
 
-        Calendar calendar = new Calendar.Builder(
-                new NetHttpTransport(),
-                JSON_FACTORY,
-                new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(accessToken))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+            Calendar calendar = new Calendar.Builder(
+                    new NetHttpTransport(),
+                    JSON_FACTORY,
+                    new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(authorizedClient.getAccessTokenValue()))
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
 
-        List<String> deletedChannelIds = List.of("467a2bcc-d7c8-4620-8b7b-a7b6bd8f69b6",
-                "60b20392-219a-420a-b98d-fda5e75008f6",
-                "0ea37cee-163f-40a8-872c-1bd1e06fb648",
-                "fccf34dc-fc19-4b58-86c5-f398954bc105",
-                "b4659913-3b75-4241-bf21-030907d36dcb"
-        );
+            Map<String, String> params = new HashMap<>();
+            Channel channel = new Channel()
+                    .setId(UUID.randomUUID().toString()) // Unique identifier for the channel
+                    .setType("web_hook")
+                    .setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google")
+                    .setParams(params)
+                    .setExpiration(System.currentTimeMillis() + 7L * 24L * 60L * 60L * 1000L);
 
-        deletedChannelIds.forEach(id -> {
-            Channel c = new Channel();
-            c.setId(id);
+
             try {
-                calendar.channels().stop(c);
+                Channel channel1 = calendar.events().watch("primary", channel).execute();
+                if (channel1 != null && channel1.getId() != null) {
+                    System.out.println("Watch Kind : " + channel1.getKind());
+                    System.out.println("Watch Channel ID: " + channel1.getId());
+                    System.out.println("Watch Resource ID: " + channel1.getResourceId());
+
+                    calvChannelsEntity.setChannelId(channel1.getId());
+                    calvChannelsEntity.setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google");
+                    calvChannelsEntity.setResourceUri(channel1.getResourceUri());
+                    calvChannelsEntity.setResourceId(channel1.getResourceId());
+                    calvChannelsEntity.setExpireAt(channel1.getExpiration());
+                    calvChannelsEntity.setRemark(channel1.getKind());
+                    calvChannelsRepository.save(calvChannelsEntity);
+                }
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                log.error("calendar.events().watch:", e);
             }
-        });
+        }
 
     }
 

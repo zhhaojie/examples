@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 第一步: 更新token
+ */
 @Service
-public class TokenRefreshTask {
+class TokenRefreshTask {
 
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
@@ -115,6 +118,5 @@ public class TokenRefreshTask {
         }
 
     }
-
 
 }
