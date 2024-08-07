@@ -57,7 +57,18 @@ public class Synchronizations {
         System.out.println("messageNumber: " + messageNumber);
         System.out.println("-----------");
 
-        syncEvents(channelId, resourceId);
+        switch (resourceState) {
+            case "sync":
+            case "exists":
+                syncEvents(channelId, resourceId);
+                break;
+            case "not_exists":
+                log.warn("Deleted resource state: " + resourceState);
+                break;
+            default:
+                log.warn("Unknown resource state: " + resourceState);
+                break;
+        }
 
         return ResponseEntity.ok().build();
     }
@@ -73,10 +84,11 @@ public class Synchronizations {
         if (channelsEntity == null) {
             return;
         }
+
         try {
             OAuth2AuthorizedClient oAuth2AuthorizedClient = getOAuth2AuthorizedClient(channelsEntity);
             if (oAuth2AuthorizedClient == null) {
-                log.warn("未能加载到授权的客户端, accountId: {}", channelsEntity.getAccountId());
+                log.warn("未能加载到授权的客户端, accountId: {}", channelsEntity.getPrincipalName());
                 return;
             }
             String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
@@ -144,13 +156,13 @@ public class Synchronizations {
     }
 
     private OAuth2AuthorizedClient getOAuth2AuthorizedClient(CalvChannelsEntity channelsEntity) {
-        OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(channelsEntity.getClientRegistrationId(), channelsEntity.getAccountId());
+        OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(channelsEntity.getClientRegistrationId(), channelsEntity.getPrincipalName());
         if (oAuth2AuthorizedClient != null && oAuth2AuthorizedClient.getAccessToken() != null) {
             Instant expirationTime = oAuth2AuthorizedClient.getAccessToken().getExpiresAt();
             if (expirationTime != null && expirationTime.isAfter(Instant.now())) {
                 return oAuth2AuthorizedClient;
             } else {
-                log.warn("Token for accountId: {} 已过期", channelsEntity.getAccountId());
+                log.warn("Token for accountId: {} 已过期", channelsEntity.getPrincipalName());
             }
         }
         return null;

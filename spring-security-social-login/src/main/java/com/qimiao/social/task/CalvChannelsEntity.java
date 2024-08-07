@@ -34,7 +34,7 @@ public class CalvChannelsEntity {
 
     @Comment("账号ID")
     @Column(nullable = false)
-    private String accountId;
+    private String principalName;
 
     @Comment("calvId")
     @Column(nullable = false)
@@ -58,7 +58,7 @@ public class CalvChannelsEntity {
 
     @Comment("订阅失效时间")
     @Column(nullable = false)
-    private Long expireAt;
+    private Long channelExpiresAt;
 
     @Comment("remark")
     private String remark;
@@ -71,7 +71,7 @@ public class CalvChannelsEntity {
     private Instant lastSyncAt;
 
     public boolean nonExpired(){
-        return expireAt > Instant.now().toEpochMilli();
+        return channelExpiresAt > Instant.now().toEpochMilli();
     }
 
 }

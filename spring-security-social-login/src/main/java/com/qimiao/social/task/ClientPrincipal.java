@@ -1,24 +1,23 @@
 package com.qimiao.social.task;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
 
 @Embeddable
-public class ClientPrincipalId {
-    @Column(name = "client_registration_id")
+public class ClientPrincipal {
+
     private String clientRegistrationId;
 
-    @Column(name = "principal_name")
     private String principalName;
 
-    public ClientPrincipalId(String clientRegistrationId, String principalName) {
+    public ClientPrincipal(String clientRegistrationId, String principalName) {
         this.clientRegistrationId = clientRegistrationId;
         this.principalName = principalName;
     }
 
-    public ClientPrincipalId() {
+    public ClientPrincipal() {
     }
 
     public String getClientRegistrationId() {
@@ -42,7 +41,7 @@ public class ClientPrincipalId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClientPrincipalId that = (ClientPrincipalId) o;
+        ClientPrincipal that = (ClientPrincipal) o;
         return Objects.equals(getClientRegistrationId(), that.getClientRegistrationId()) && Objects.equals(getPrincipalName(), that.getPrincipalName());
     }
 

@@ -33,16 +33,14 @@ class CalvWatchTask {
 
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
-
     @Resource
     CustomOAuth2AuthorizedClientRepository customOAuth2AuthorizedClientRepository;
 
     @Resource
     CalvChannelsRepository calvChannelsRepository;
 
-
     @lombok.SneakyThrows
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
+//    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     void renewChannel() {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
                 "google", "115152964495372047642");
@@ -55,7 +53,7 @@ class CalvWatchTask {
             return;
         }
 
-        CalvChannelsEntity activeChannel = calvChannelsRepository.findByClientRegistrationIdAndAccountIdAndCalvId("google", "115152964495372047642", "primary");
+        CalvChannelsEntity activeChannel = calvChannelsRepository.findByClientRegistrationIdAndPrincipalNameAndCalvId("google", "115152964495372047642", "primary");
 
         if (activeChannel == null || activeChannel.nonExpired()) {
             return;
@@ -88,7 +86,7 @@ class CalvWatchTask {
                 activeChannel.setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google");
                 activeChannel.setResourceUri(channel1.getResourceUri());
                 activeChannel.setResourceId(channel1.getResourceId());
-                activeChannel.setExpireAt(channel1.getExpiration());
+                activeChannel.setChannelExpiresAt(channel1.getExpiration());
                 activeChannel.setRemark(channel1.getKind());
                 calvChannelsRepository.save(activeChannel);
             }
@@ -105,18 +103,18 @@ class CalvWatchTask {
 
         for (OAuth2AuthorizedClientEntity authorizedClient : auth2AuthorizedClientEntities) {
 
-            String accountId = authorizedClient.getId().getPrincipalName();
-            String clientRegistrationId = authorizedClient.getId().getClientRegistrationId();
+            String principalName = authorizedClient.getPrincipal().getPrincipalName();
+            String clientRegistrationId = authorizedClient.getPrincipal().getClientRegistrationId();
             String calvId = "primary";
 
-            CalvChannelsEntity primary = calvChannelsRepository.findByClientRegistrationIdAndAccountIdAndCalvId(clientRegistrationId, accountId, calvId);
+            CalvChannelsEntity primary = calvChannelsRepository.findByClientRegistrationIdAndPrincipalNameAndCalvId(clientRegistrationId, principalName, calvId);
             if (primary != null) {
                 return;
             }
 
             CalvChannelsEntity calvChannelsEntity = new CalvChannelsEntity();
             calvChannelsEntity.setId(TsidCreator.getTsid().toLong());
-            calvChannelsEntity.setAccountId(accountId);
+            calvChannelsEntity.setPrincipalName(principalName);
             calvChannelsEntity.setCalvId(calvId);
             calvChannelsEntity.setClientRegistrationId(clientRegistrationId);
 
@@ -148,7 +146,7 @@ class CalvWatchTask {
                     calvChannelsEntity.setAddress("https://9160-113-104-190-29.ngrok-free.app/notifications/google");
                     calvChannelsEntity.setResourceUri(channel1.getResourceUri());
                     calvChannelsEntity.setResourceId(channel1.getResourceId());
-                    calvChannelsEntity.setExpireAt(channel1.getExpiration());
+                    calvChannelsEntity.setChannelExpiresAt(channel1.getExpiration());
                     calvChannelsEntity.setRemark(channel1.getKind());
                     calvChannelsRepository.save(calvChannelsEntity);
                 }

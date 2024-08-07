@@ -18,30 +18,22 @@ import java.time.Instant;
 public class OAuth2AuthorizedClientEntity {
 
     @EmbeddedId
-    private ClientPrincipalId id;
+    private ClientPrincipal principal;
 
-    @Column(name = "access_token_type")
     private String accessTokenType;
 
-    @Column(name = "access_token_value")
     private String accessTokenValue;
 
-    @Column(name = "access_token_issued_at")
     private Instant accessTokenIssuedAt;
 
-    @Column(name = "access_token_expires_at")
     private Instant accessTokenExpiresAt;
 
-    @Column(name = "access_token_scopes")
     private String accessTokenScopes;
 
-    @Column(name = "refresh_token_value")
     private String refreshTokenValue;
 
-    @Column(name = "refresh_token_issued_at")
     private Instant refreshTokenIssuedAt;
 
-    @Column(name = "created_at")
     private Instant createdAt;
 
 }
