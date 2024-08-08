@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 第一步: 更新token
@@ -55,8 +56,20 @@ class RefreshAccessTokenTask {
         log.info("doRefreshToken took {} milliseconds", endTime - startTime);
     }
 
+    void refresh(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
+        List<OAuth2AuthorizedClientEntity> googles = authorizedClientEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("google"))
+                .toList();
+        List<OAuth2AuthorizedClientEntity> azures = authorizedClientEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("azure"))
+                .toList();
+
+        refreshGoogle(googles);
+        refreshOutLook(azures);
+    }
+
     // 可能需要虚拟线程来做
-    public void refresh(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
+    void refreshGoogle(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
         for (OAuth2AuthorizedClientEntity entity : authorizedClientEntities) {
 
             OAuth2AuthorizedClient oAuth2AuthorizedClient =
@@ -148,6 +161,9 @@ class RefreshAccessTokenTask {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    void refreshOutLook(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
     }
 
 }

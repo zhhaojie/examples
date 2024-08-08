@@ -13,8 +13,11 @@ spring:
         provider:
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
           azure:
-            issuer-uri: https://login.microsoftonline.com/cf7cc825-b528-4694-879e-c25c0cd91ac7/v2.0
+            authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+            token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            jwk-set-uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
         registration:
           google:
             provider: google
@@ -38,7 +41,7 @@ spring:
                 - openid
                 - email
                 - profile
-
+                - Calendars.Read
   jpa:
     generate-ddl: true
     show-sql: true

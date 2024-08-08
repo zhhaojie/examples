@@ -63,7 +63,15 @@ class RefreshCalvChannelTask {
     }
 
     void renew0(List<CalvChannelsEntity> calvChannelsEntities) {
-        for (CalvChannelsEntity calvChannelsEntity : calvChannelsEntities) {
+        List<CalvChannelsEntity> googles = calvChannelsEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getClientRegistrationId().equals("google"))
+                .toList();
+
+        List<CalvChannelsEntity> azures = calvChannelsEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getClientRegistrationId().equals("azure"))
+                .toList();
+
+        for (CalvChannelsEntity calvChannelsEntity : googles) {
             if (calvChannelsEntity == null || calvChannelsEntity.nonExpired()) {
                 return;
             }
@@ -138,7 +146,15 @@ class RefreshCalvChannelTask {
     }
 
     void init0(List<OAuth2AuthorizedClientEntity> auth2AuthorizedClientEntities) {
-        for (OAuth2AuthorizedClientEntity authorizedClient : auth2AuthorizedClientEntities) {
+        List<OAuth2AuthorizedClientEntity> googles = auth2AuthorizedClientEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("google"))
+                .toList();
+
+        List<OAuth2AuthorizedClientEntity> azures = auth2AuthorizedClientEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("azure"))
+                .toList();
+
+        for (OAuth2AuthorizedClientEntity authorizedClient : googles) {
             if (authorizedClient.getAccessTokenExpiresAt().isBefore(Instant.now())) {
                 return;
             }
