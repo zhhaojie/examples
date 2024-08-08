@@ -29,7 +29,7 @@ public class OAuth2AuthorizedClientEntity {
     @Column(name = "access_token_type", nullable = false)
     private String accessTokenType;
 
-    @Column(name = "access_token_value", nullable = false, length = 500)
+    @Column(name = "access_token_value", nullable = false, length = 1400)
     private String accessTokenValue;
 
     @Column(name = "access_token_issued_at", nullable = false)
@@ -38,10 +38,10 @@ public class OAuth2AuthorizedClientEntity {
     @Column(name = "access_token_expires_at", nullable = false)
     private Instant accessTokenExpiresAt;
 
-    @Column(name = "access_token_scopes")
+    @Column(name = "access_token_scopes", length = 500)
     private String accessTokenScopes;
 
-    @Column(name = "refresh_token_value")
+    @Column(name = "refresh_token_value", length = 1400)
     private String refreshTokenValue;
 
     @Column(name = "refresh_token_issued_at")
