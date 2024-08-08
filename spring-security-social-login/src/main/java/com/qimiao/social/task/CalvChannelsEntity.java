@@ -70,7 +70,7 @@ public class CalvChannelsEntity {
     @JsonIgnore
     private Instant lastSyncAt;
 
-    public boolean nonExpired(){
+    public boolean nonExpired() {
         return channelExpiresAt > Instant.now().toEpochMilli();
     }
 

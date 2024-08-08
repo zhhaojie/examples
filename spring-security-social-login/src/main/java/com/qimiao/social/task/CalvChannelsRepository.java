@@ -1,9 +1,9 @@
 package com.qimiao.social.task;
 
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface CalvChannelsRepository extends ListCrudRepository<CalvChannelsEntity, Long> {
+public interface CalvChannelsRepository extends JpaRepository<CalvChannelsEntity, Long> {
 
     CalvChannelsEntity findByClientRegistrationIdAndPrincipalNameAndCalvId(String client, String account, String calvId);
 

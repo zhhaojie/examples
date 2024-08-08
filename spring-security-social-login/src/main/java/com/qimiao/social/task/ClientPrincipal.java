@@ -1,6 +1,7 @@
 package com.qimiao.social.task;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
@@ -8,8 +9,10 @@ import java.util.Objects;
 @Embeddable
 public class ClientPrincipal {
 
+    @Column(name = "client_registration_id", nullable = false)
     private String clientRegistrationId;
 
+    @Column(name = "principal_name", nullable = false)
     private String principalName;
 
     public ClientPrincipal(String clientRegistrationId, String principalName) {

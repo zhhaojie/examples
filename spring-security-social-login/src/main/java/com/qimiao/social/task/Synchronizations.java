@@ -13,26 +13,21 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Event数据增量同步实现.该方法由google或outlook进行回调.
  * 这个入口必须稳定,上线之后不允许随意变更.
  */
-@Controller
 @Slf4j
+@Controller
 public class Synchronizations {
 
     @Resource
@@ -93,7 +88,7 @@ public class Synchronizations {
             }
             String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
 
-            Calendar service = new Calendar.Builder(
+            Calendar calendar = new Calendar.Builder(
                     GoogleNetHttpTransport.newTrustedTransport(),
                     GsonFactory.getDefaultInstance(),
                     new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(accessToken))
@@ -108,13 +103,13 @@ public class Synchronizations {
                 Events events;
                 try {
                     if (nextSyncToken != null) {
-                        events = service.events().list(calendarId)
+                        events = calendar.events().list(calendarId)
                                 .setSyncToken(nextSyncToken)
                                 .setPageToken(nextPageToken)
                                 .setSingleEvents(false)
                                 .execute();
                     } else {
-                        events = service.events().list(calendarId)
+                        events = calendar.events().list(calendarId)
                                 .setMaxResults(250)
                                 .setSingleEvents(false)
                                 .setTimeMin(new DateTime(System.currentTimeMillis() - 365L * 24L * 60L * 60L * 1000L)) // 过去一年的数据
