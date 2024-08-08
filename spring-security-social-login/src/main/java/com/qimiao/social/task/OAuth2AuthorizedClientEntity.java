@@ -1,14 +1,12 @@
 package com.qimiao.social.task;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import java.time.Instant;
 
@@ -29,7 +27,7 @@ public class OAuth2AuthorizedClientEntity {
     @Column(name = "access_token_type", nullable = false)
     private String accessTokenType;
 
-    @Column(name = "access_token_value", nullable = false, length = 1400)
+    @Column(name = "access_token_value", nullable = false, columnDefinition = "TEXT")
     private String accessTokenValue;
 
     @Column(name = "access_token_issued_at", nullable = false)
@@ -41,7 +39,7 @@ public class OAuth2AuthorizedClientEntity {
     @Column(name = "access_token_scopes", length = 500)
     private String accessTokenScopes;
 
-    @Column(name = "refresh_token_value", length = 1400)
+    @Column(name = "refresh_token_value", columnDefinition = "TEXT")
     private String refreshTokenValue;
 
     @Column(name = "refresh_token_issued_at")
