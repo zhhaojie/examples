@@ -2,7 +2,7 @@ logging:
   level:
     org:
       springframework:
-        security: info
+        security: trace
     com.google.api.client: info
 spring:
   application:
@@ -11,25 +11,32 @@ spring:
     oauth2:
       client:
         registration:
-          github:
-            client-id: Ov23liRa0GHrCPbEpAMf
-            client-secret: a4572d99622276afb6f8b75f5f819639a181da00
-            redirect-uri: http://localhost:8080/login/oauth2/code/github
-            scope:
-              - email
-              - profile
-              - offline_access
           google:
             client-id: 768944951916-ik6spf8bdt6f9jk9l96u2f1bos12upgl.apps.googleusercontent.com
             client-secret: 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
             redirect-uri: http://localhost:8080/login/oauth2/code/google
+            authorization-grant-type: authorization_code
             scope:
               - https://www.googleapis.com/auth/userinfo.email
               - https://www.googleapis.com/auth/userinfo.profile
               - https://www.googleapis.com/auth/calendar.readonly
+          outlook:
+              client-id: a1a42d95-2a30-495e-ab6e-311e9611b801
+              client-secret: 4bs8Q~CRCzVd_qACFaLOv5tFUWhpaUHDSpAKJahj
+              redirect-uri: http://localhost:8080/login/oauth2/code/outlook/
+              authorization-grant-type: authorization_code
+              scope:
+                - offline_access
+                - User.Read
+                - Calendars.Read
         provider:
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline
+          outlook:
+            authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+            token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            user-info-uri: https://graph.microsoft.com/v1.0/me
+            user-name-attribute: email
   jpa:
     generate-ddl: true
     show-sql: true

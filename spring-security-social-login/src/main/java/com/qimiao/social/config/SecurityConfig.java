@@ -28,6 +28,8 @@ public class SecurityConfig {
                             .requestMatchers("/", "/error").permitAll()
                             .requestMatchers("/favicon.ico", "/webjars/**").permitAll()
                             .requestMatchers("/notifications/**").permitAll()
+                            .requestMatchers("/login/**").permitAll()
+                            .requestMatchers("/logout").permitAll()
                             .anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
