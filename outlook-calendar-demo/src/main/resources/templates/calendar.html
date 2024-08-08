@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Calendar Events</title>
+</head>
+<body>
+<h1>Your Calendar Events</h1>
+<ul>
+    <li th:each="event : ${events}" th:text="${event.subject}"></li>
+</ul>
+</body>
+</html>

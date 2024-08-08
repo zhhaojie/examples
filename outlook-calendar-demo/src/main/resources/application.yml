@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: outlook-calendar-demo
+  security:
+    oauth2:
+      client:
+        registration:
+          azure:
+            provider: azure
+            client-id: a1a42d95-2a30-495e-ab6e-311e9611b801
+            client-secret: 4bs8Q~CRCzVd_qACFaLOv5tFUWhpaUHDSpAKJahj
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/
+            scope:
+              - offline_access
+              - openid
+              - email
+              - profile
+              - Calendars.Read
+        provider:
+          azure:
+            jwk-set-uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
+            authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+            token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            user-name-attribute: oid
