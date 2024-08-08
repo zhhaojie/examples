@@ -17,6 +17,7 @@ spring:
           azure:
             authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
             token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            user-name-attribute: oid
             jwk-set-uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
         registration:
           google:
@@ -38,6 +39,7 @@ spring:
               redirect-uri: http://localhost:8080/login/oauth2/code/
               authorization-grant-type: authorization_code
               scope:
+                - offline_access
                 - openid
                 - email
                 - profile
@@ -45,6 +47,10 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 15
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/family_book?useUnicode=true&characterEncoding=utf-8

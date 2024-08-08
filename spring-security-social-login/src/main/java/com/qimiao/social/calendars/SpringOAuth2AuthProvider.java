@@ -1,15 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
 
-package com.example.graphwebhook;
+package com.qimiao.social.calendars;
 
-import java.net.URISyntaxException;
-import java.util.Map;
-import java.util.Objects;
 import com.microsoft.kiota.RequestInformation;
 import com.microsoft.kiota.authentication.AuthenticationProvider;
 import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+
+import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * An implementation of IAuthenticationProvider that uses Spring's OAuth2AuthorizedClient to get

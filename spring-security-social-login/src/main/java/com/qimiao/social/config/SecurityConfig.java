@@ -33,7 +33,7 @@ public class SecurityConfig {
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.defaultSuccessUrl("/"))
-                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomSavedRequestAwareAuthenticationSuccessHandler(oAuth2AuthorizedClientService)))
+                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomAuthenticationSuccessHandler(oAuth2AuthorizedClientService)))
                 .build();
     }
 

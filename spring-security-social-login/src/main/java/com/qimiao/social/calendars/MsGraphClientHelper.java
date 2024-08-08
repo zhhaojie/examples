@@ -4,12 +4,12 @@ import com.microsoft.graph.serviceclient.GraphServiceClient;
 import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 
-public class GraphClientHelper {
+public class MsGraphClientHelper {
 
     /**
      * private constructor to hide the implicit public one
      */
-    private GraphClientHelper() {
+    private MsGraphClientHelper() {
         throw new IllegalStateException("Static class");
     }
 

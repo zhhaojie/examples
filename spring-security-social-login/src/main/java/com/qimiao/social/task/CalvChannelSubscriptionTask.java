@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Service
-class RefreshCalvChannelTask {
+class CalvChannelSubscriptionTask {
     private static final String APPLICATION_NAME = "NBExampleApplication";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 

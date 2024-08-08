@@ -15,11 +15,11 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 import java.io.IOException;
 
-public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
-    public AuthenticationSuccessHandler(OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
+    public CustomAuthenticationSuccessHandler(OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
         this.oAuth2AuthorizedClientService = oAuth2AuthorizedClientService;
     }
 
