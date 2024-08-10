@@ -1,0 +1,264 @@
+{
+ "kind": "calendar#events",
+ "etag": "\"p324e1pujsvjoe0o\"",
+ "summary": "okzhouhaojie@gmail.com",
+ "description": "",
+ "updated": "2024-08-09T11:31:03.509Z",
+ "timeZone": "Asia/Shanghai",
+ "accessRole": "owner",
+ "defaultReminders": [
+  {
+   "method": "popup",
+   "minutes": 30
+  }
+ ],
+ "nextSyncToken": "CIjg59Pn54cDEIjg59Pn54cDGAUggMfYugIogMfYugI=",
+ "items": [
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240817",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MTcgb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-17"
+   },
+   "end": {
+    "date": "2024-08-18"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-17"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240818",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MTggb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-18"
+   },
+   "end": {
+    "date": "2024-08-19"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-18"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240819",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MTkgb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-19"
+   },
+   "end": {
+    "date": "2024-08-20"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-19"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240820",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MjAgb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-20"
+   },
+   "end": {
+    "date": "2024-08-21"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-20"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240821",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MjEgb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-21"
+   },
+   "end": {
+    "date": "2024-08-22"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-21"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3446406127018000\"",
+   "id": "6dbn4flunqok2a7trp3sv46u53_20240822",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=NmRibjRmbHVucW9rMmE3dHJwM3N2NDZ1NTNfMjAyNDA4MjIgb2t6aG91aGFvamllQG0",
+   "created": "2024-08-09T11:31:03.000Z",
+   "updated": "2024-08-09T11:31:03.509Z",
+   "summary": "R0",
+   "creator": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "okzhouhaojie@gmail.com",
+    "self": true
+   },
+   "start": {
+    "date": "2024-08-22"
+   },
+   "end": {
+    "date": "2024-08-23"
+   },
+   "recurringEventId": "6dbn4flunqok2a7trp3sv46u53",
+   "originalStartTime": {
+    "date": "2024-08-22"
+   },
+   "transparency": "transparent",
+   "iCalUID": "6dbn4flunqok2a7trp3sv46u53@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": false,
+    "overrides": [
+     {
+      "method": "popup",
+      "minutes": 900
+     }
+    ]
+   },
+   "eventType": "default"
+  }
+ ]
+}

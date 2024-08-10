@@ -1,0 +1,889 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('newzhouhaojie%40outlook.com')/calendarView",
+    "value": [
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuAY2S4AARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808090803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuAY2S4AARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-09",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-09T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-10T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuM9gtUAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080A0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuM9gtUAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-10",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-10T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-11T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuZiLHwAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA=",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080B0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuZiLHwAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-11",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-11T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-12T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcumG1iMAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080C0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcumG1iMAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-12",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-12T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-13T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuyrf8oAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080D0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcuyrf8oAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-13",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-13T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-14T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcu-QKXEAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080E0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcu%2FQKXEAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-14",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-14T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-15T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvL00xgAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA=",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E8080F0803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvL00xgAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-15",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-15T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-16T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvk_JmYAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808110803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvk%2BJmYAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-17",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-17T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-18T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvxi0A0AARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808120803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcvxi0A0AARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-18",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-18T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-19T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcv_HebQAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA=",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808130803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcv%2BHebQAAAEYAAAJ2XhgxCiOqRp3ngnuOj18qBwBeQ1mS9KplSLpyiYSveBpcAAACAQ0AAABeQ1mS9KplSLpyiYSveBpcAAAAFBUOTgAAABA%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-19",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-19T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-20T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwKsI1sAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808140803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwKsI1sAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-20",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-20T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-21T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwXQzQIAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808150803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwXQzQIAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-21",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-21T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-22T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        },
+        {
+            "@odata.etag": "W/\"XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==\"",
+            "id": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwj1dqkAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA==",
+            "createdDateTime": "2024-08-09T10:00:51.236317Z",
+            "lastModifiedDateTime": "2024-08-09T10:49:35.6982418Z",
+            "changeKey": "XkNZkvSqZUi6comEr3gaXAAAFBL+Vw==",
+            "categories": [],
+            "transactionId": "6625edf0-f397-6d96-27ac-6441b88baf7e",
+            "originalStartTimeZone": "UTC",
+            "originalEndTimeZone": "UTC",
+            "iCalUId": "040000008200E00074C5B7101A82E00807E808160803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "uid": "040000008200E00074C5B7101A82E008000000000803090443EADA0100000000000000001000000034672E37C6B63E41A94D3E8ADB8C9C84",
+            "reminderMinutesBeforeStart": -540,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "R0",
+            "bodyPreview": "",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": true,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA",
+            "showAs": "free",
+            "type": "occurrence",
+            "webLink": "https://outlook.live.com/owa/?itemid=AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoBUQAICADcwj1dqkAARgAAAnZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": false,
+            "onlineMeetingProvider": "unknown",
+            "allowNewTimeProposals": true,
+            "occurrenceId": "OID.AQMkADAwATMwMAItN2NkOS04NmQ1LTAwAi0wMAoARgAAA3ZeGDEKI6pGneeCe46PXyoHAF5DWZL0qmVIunKJhK94GlwAAAIBDQAAAF5DWZL0qmVIunKJhK94GlwAAAAUFQ5OAAAA.2024-08-22",
+            "isDraft": false,
+            "hideAttendees": false,
+            "responseStatus": {
+                "response": "organizer",
+                "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+                "contentType": "html",
+                "content": ""
+            },
+            "start": {
+                "dateTime": "2024-08-22T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "end": {
+                "dateTime": "2024-08-23T00:00:00.0000000",
+                "timeZone": "UTC"
+            },
+            "location": {
+                "displayName": "",
+                "locationType": "default",
+                "uniqueIdType": "unknown",
+                "address": {},
+                "coordinates": {}
+            },
+            "locations": [],
+            "recurrence": null,
+            "attendees": [],
+            "organizer": {
+                "emailAddress": {
+                    "name": "zhou haojie",
+                    "address": "newzhouhaojie@outlook.com"
+                }
+            },
+            "onlineMeeting": null
+        }
+    ]
+}
