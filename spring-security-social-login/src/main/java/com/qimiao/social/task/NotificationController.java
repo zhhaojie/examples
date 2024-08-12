@@ -12,11 +12,16 @@ import com.google.api.services.calendar.model.Events;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -28,13 +33,16 @@ import java.time.Instant;
  */
 @Slf4j
 @Controller
-public class Synchronizations {
+public class NotificationController {
 
     @Resource
     private OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
-
     @Resource
     private CalvChannelsRepository calvChannelsRepository;
+
+    //
+    // 处理graph的请求
+    //
 
     @PostMapping("/notifications/google")
     public ResponseEntity<Void> google(HttpServletRequest request) {
@@ -55,26 +63,20 @@ public class Synchronizations {
         switch (resourceState) {
             case "sync":
             case "exists":
-                syncEvents(channelId, resourceId);
+                getGoogleEvents(channelId, resourceId);
                 break;
             case "not_exists":
-                log.warn("Deleted resource state: " + resourceState);
+                log.warn("Deleted resource state: {}", resourceState);
                 break;
             default:
-                log.warn("Unknown resource state: " + resourceState);
+                log.warn("Unknown resource state: {}", resourceState);
                 break;
         }
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/notifications/outlook")
-    public ResponseEntity<?> outlook() {
-        System.out.println("outlook callback");
-        return null;
-    }
-
-    public void syncEvents(String channelId, String resourceId) {
+    void getGoogleEvents(String channelId, String resourceId) {
         CalvChannelsEntity channelsEntity = calvChannelsRepository.findByChannelIdAndResourceId(channelId, resourceId);
         if (channelsEntity == null) {
             return;
@@ -119,7 +121,7 @@ public class Synchronizations {
                     }
 
                     for (Event event : events.getItems()) {
-                        processEvent(event);
+                        processGoogleEvent(event);
                     }
 
                     nextPageToken = events.getNextPageToken();
@@ -150,7 +152,7 @@ public class Synchronizations {
         }
     }
 
-    private OAuth2AuthorizedClient getOAuth2AuthorizedClient(CalvChannelsEntity channelsEntity) {
+    OAuth2AuthorizedClient getOAuth2AuthorizedClient(CalvChannelsEntity channelsEntity) {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(channelsEntity.getClientRegistrationId(), channelsEntity.getPrincipalName());
         if (oAuth2AuthorizedClient != null && oAuth2AuthorizedClient.getAccessToken() != null) {
             Instant expirationTime = oAuth2AuthorizedClient.getAccessToken().getExpiresAt();
@@ -163,9 +165,28 @@ public class Synchronizations {
         return null;
     }
 
-    private void processEvent(Event event) {
+    void processGoogleEvent(Event event) {
         final String RESET = "\u001B[0m";
         final String CYAN = "\u001B[36m";
         System.out.printf(CYAN + "EventId: %s : Title: %s (%s)\n" + RESET, event.getId(), event.getSummary(), event.getStatus());
     }
+
+
+    //
+    // 处理graph的请求
+    //
+
+    @PostMapping("/notifications/outlook")
+    public ResponseEntity<String> outlook(@RequestBody @NonNull final String jsonPayload) {
+        System.out.println("Outlook callback payload: " + jsonPayload);
+        return ResponseEntity.ok().body("");
+    }
+
+    @PostMapping(value = "/notifications/outlook", headers = {"content-type=text/plain"})
+    @ResponseBody
+    public ResponseEntity<String> handleValidation(@RequestParam(value = "validationToken") final String validationToken) {
+        System.out.println("handleValidation: " + validationToken);
+        return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(validationToken);
+    }
+
 }

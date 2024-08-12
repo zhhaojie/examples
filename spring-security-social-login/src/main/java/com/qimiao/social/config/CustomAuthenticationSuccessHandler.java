@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.minidev.json.JSONObject;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -19,8 +20,11 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
-    public CustomAuthenticationSuccessHandler(OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
+    private final ApplicationEventPublisher eventPublisher;
+
+    public CustomAuthenticationSuccessHandler(OAuth2AuthorizedClientService oAuth2AuthorizedClientService, ApplicationEventPublisher eventPublisher) {
         this.oAuth2AuthorizedClientService = oAuth2AuthorizedClientService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -44,6 +48,8 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                     System.out.println("Refresh Token: " + refreshToken.getTokenValue());
                     System.out.println("Refresh Token Issued At: " + refreshToken.getIssuedAt());
                 }
+
+                eventPublisher.publishEvent(authorizedClient);
             }
 
             response.setContentType("application/json");

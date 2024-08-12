@@ -24,12 +24,12 @@ public class XX {
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
-    @Scheduled(fixedRate = 1000)
+  //  @Scheduled(fixedRate = 1000)
     void outlook() {
         List<OAuth2AuthorizedClientEntity> authorizedClientEntities = oAuth2AuthorizedClientRepository.findAll();
-        List<OAuth2AuthorizedClientEntity> azures = authorizedClientEntities.stream().filter(oo -> oo.getPrincipal().getClientRegistrationId().equals("azure")).toList();
+        List<OAuth2AuthorizedClientEntity> microsofts = authorizedClientEntities.stream().filter(oo -> oo.getPrincipal().getClientRegistrationId().equals("microsoft")).toList();
 
-        for (OAuth2AuthorizedClientEntity authorizedClientEntity : azures) {
+        for (OAuth2AuthorizedClientEntity authorizedClientEntity : microsofts) {
             OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(authorizedClientEntity.getPrincipal().getClientRegistrationId(), authorizedClientEntity.getPrincipal().getPrincipalName());
 
             SimpleAuthProvider simpleAuthProvider = new SimpleAuthProvider(oAuth2AuthorizedClient.getAccessToken().getTokenValue());

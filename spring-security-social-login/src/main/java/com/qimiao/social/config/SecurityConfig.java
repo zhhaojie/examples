@@ -1,6 +1,7 @@
 package com.qimiao.social.config;
 
 import jakarta.annotation.Resource;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,9 @@ public class SecurityConfig {
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
+    @Resource
+    ApplicationEventPublisher applicationEventPublisher;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -33,7 +37,7 @@ public class SecurityConfig {
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.defaultSuccessUrl("/"))
-                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomAuthenticationSuccessHandler(oAuth2AuthorizedClientService)))
+                .oauth2Login(oauth2 -> oauth2.successHandler(new CustomAuthenticationSuccessHandler(oAuth2AuthorizedClientService, applicationEventPublisher)))
                 .build();
     }
 

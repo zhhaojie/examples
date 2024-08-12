@@ -32,17 +32,13 @@ public class CalvChannelsEntity {
     @Column(nullable = false)
     private String clientRegistrationId;
 
-    @Comment("账号ID")
-    @Column(nullable = false)
-    private String principalName;
-
     @Comment("calvId")
     @Column(nullable = false)
     private String calvId;
 
-    @Comment("address")
+    @Comment("notificationUrl")
     @Column(nullable = false)
-    private String address;
+    private String notificationUrl;
 
     @Comment("resourceId")
     @Column(nullable = false)
@@ -62,6 +58,13 @@ public class CalvChannelsEntity {
 
     @Comment("remark")
     private String remark;
+
+    /**
+     * 谁来订阅?
+     */
+    @Comment("账号ID")
+    @Column(nullable = false)
+    private String principalName;
 
     @Comment("在每次同步后，获取 nextSyncToken 并存储，以便在下一次同步时使用")
     private String nextSyncToken;

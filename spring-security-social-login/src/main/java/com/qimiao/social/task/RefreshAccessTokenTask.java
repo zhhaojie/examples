@@ -60,12 +60,12 @@ class RefreshAccessTokenTask {
         List<OAuth2AuthorizedClientEntity> googles = authorizedClientEntities.stream()
                 .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("google"))
                 .toList();
-        List<OAuth2AuthorizedClientEntity> azures = authorizedClientEntities.stream()
-                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("azure"))
+        List<OAuth2AuthorizedClientEntity> microsofts = authorizedClientEntities.stream()
+                .filter(authorizedClient -> authorizedClient.getPrincipal().getClientRegistrationId().equals("microsoft"))
                 .toList();
 
         refreshGoogle(googles);
-        refreshOutLook(azures);
+        refreshOutLook(microsofts);
     }
 
     // 可能需要虚拟线程来做
