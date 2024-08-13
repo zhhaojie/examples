@@ -7,14 +7,15 @@ import jakarta.annotation.Nullable;
 
 import java.util.Map;
 
-public  class SimpleAuthProvider implements AuthenticationProvider {
-        private final String accessToken;
-        public SimpleAuthProvider(String accessToken) {
-            this.accessToken = accessToken;
-        }
+public class SimpleGraphAuthProvider implements AuthenticationProvider {
+    private final String accessToken;
+
+    public SimpleGraphAuthProvider(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     @Override
     public void authenticateRequest(@Nonnull RequestInformation request, @Nullable Map<String, Object> additionalAuthenticationContext) {
         request.headers.add("Authorization", "Bearer " + accessToken);
     }
-    }
+}

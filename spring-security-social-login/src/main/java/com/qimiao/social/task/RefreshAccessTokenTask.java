@@ -2,6 +2,7 @@ package com.qimiao.social.task;
 
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.UserCredentials;
+import com.qimiao.social.calendars.Apps;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,10 +24,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * 第一步: 更新token
+ * 一般来说, google这个订阅关系7天过期. 微软订阅关系3天过期
  */
 @Slf4j
 @Service
@@ -38,7 +39,7 @@ class RefreshAccessTokenTask {
     @Resource
     CustomOAuth2AuthorizedClientRepository customOAuth2AuthorizedClientRepository;
 
-    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
     void doRefreshToken() {
         long startTime = System.currentTimeMillis();
         log.info("doRefreshToken started at {}", LocalDateTime.now());
@@ -90,8 +91,8 @@ class RefreshAccessTokenTask {
 
             try {
                 UserCredentials credentials = UserCredentials.newBuilder()
-                        .setClientId("768944951916-ik6spf8bdt6f9jk9l96u2f1bos12upgl.apps.googleusercontent.com")
-                        .setClientSecret("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")
+                        .setClientId(Apps.Google.CLIENT_ID)
+                        .setClientSecret(Apps.Google.CLIENT_SECRET)
                         .setRefreshToken(refreshToken.getTokenValue())
                         .build();
 
