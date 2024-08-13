@@ -21,8 +21,8 @@ import java.time.Instant;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "tb_calv_channels")
-public class CalvChannelsEntity {
+@Table(name = "tb_calv_subscriptions")
+public class SubscriptionsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("主键ID")
@@ -36,27 +36,28 @@ public class CalvChannelsEntity {
     @Column(nullable = false)
     private String calvId;
 
-    @Comment("resourceId")
-    private String resourceId;
+    @Comment("calvName")
+    @Column(nullable = false)
+    private String calvName;
 
     @Comment("resourceUri")
     private String resourceUri;
 
-    @Comment("channelId")
-    @Column(nullable = false)
-    private String channelId;
+    @Comment("resourceId")
+    private String resourceId;
 
-    @Comment("订阅失效时间")
+    @Comment("subscriptionId")
     @Column(nullable = false)
-    private Long channelExpiresAt;
+    private String subscriptionId;
+
+    @Comment("expiresAt")
+    @Column(nullable = false)
+    private Long expiresAt;
 
     @Comment("remark")
     private String remark;
 
-    /**
-     * 谁来订阅
-     */
-    @Comment("账号ID")
+    @Comment("principalName")
     @Column(nullable = false)
     private String principalName;
 
@@ -72,7 +73,7 @@ public class CalvChannelsEntity {
     private Instant lastSyncAt;
 
     public boolean nonExpired() {
-        return channelExpiresAt > Instant.now().toEpochMilli();
+        return expiresAt > Instant.now().toEpochMilli();
     }
 
 }

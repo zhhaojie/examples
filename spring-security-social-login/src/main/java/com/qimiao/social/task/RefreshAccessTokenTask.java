@@ -2,9 +2,14 @@ package com.qimiao.social.task;
 
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.UserCredentials;
+import com.microsoft.aad.msal4j.ClientCredentialFactory;
+import com.microsoft.aad.msal4j.ConfidentialClientApplication;
+import com.microsoft.aad.msal4j.IAuthenticationResult;
+import com.microsoft.aad.msal4j.RefreshTokenParameters;
 import com.qimiao.social.calendars.Apps;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +23,15 @@ import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,12 +41,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 class RefreshAccessTokenTask {
-
     @Resource
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
 
     @Resource
     CustomOAuth2AuthorizedClientRepository customOAuth2AuthorizedClientRepository;
+
+    @Resource
+    OAuth2ClientProperties oAuth2ClientProperties;
 
     @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
     void doRefreshToken() {
@@ -76,7 +87,9 @@ class RefreshAccessTokenTask {
             OAuth2AuthorizedClient oAuth2AuthorizedClient =
                     oAuth2AuthorizedClientService.loadAuthorizedClient(entity.getPrincipal().getClientRegistrationId(), entity.getPrincipal().getPrincipalName());
 
-            if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null || oAuth2AuthorizedClient.getRefreshToken() == null) {
+            if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null
+                    || oAuth2AuthorizedClient.getRefreshToken() == null || oAuth2AuthorizedClient.getAccessToken().getExpiresAt() == null) {
+                log.warn("OAuth2AuthorizedClient@GOOGLE 数据非法, 无法更新Token");
                 return;
             }
 
@@ -84,27 +97,26 @@ class RefreshAccessTokenTask {
             OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
 
             // 提前十分钟更新
-            Instant expirationTime = Objects.requireNonNull(accessToken.getExpiresAt());
+            Instant expirationTime = accessToken.getExpiresAt();
             if (expirationTime.isAfter(Instant.now())) {
                 return;
             }
 
             try {
                 UserCredentials credentials = UserCredentials.newBuilder()
-                        .setClientId(Apps.Google.CLIENT_ID)
-                        .setClientSecret(Apps.Google.CLIENT_SECRET)
+                        .setClientId(Apps.GOOGLE.CLIENT_ID)
+                        .setClientSecret(Apps.GOOGLE.CLIENT_SECRET)
                         .setRefreshToken(refreshToken.getTokenValue())
                         .build();
 
                 credentials.refreshIfExpired();
                 AccessToken newToken = credentials.getAccessToken();
                 if (newToken == null || newToken.getExpirationTime() == null) {
+                    log.error("请求Google数据失败.无法更新.");
                     return;
                 }
 
                 Instant expirationInstant = newToken.getExpirationTime().toInstant();
-
-                // 获取 oAuth2AuthorizedClient 的到期时间，并确保它不为 null
                 Instant oAuth2ExpirationInstant = Objects.requireNonNull(accessToken.getExpiresAt());
 
                 OAuth2AccessToken updatedAccessToken = new OAuth2AccessToken(
@@ -148,23 +160,133 @@ class RefreshAccessTokenTask {
                     }
 
                     @Override
+                    public String getName() {
+                        return oAuth2AuthorizedClient.getPrincipalName();
+                    }
+
+                    @Override
                     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
+                    }
+
+
+                });
+
+            } catch (IOException exception) {
+                log.error("refreshGoogle:", exception);
+            }
+        }
+    }
+
+    void refreshOutLook(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
+        for (OAuth2AuthorizedClientEntity entity : authorizedClientEntities) {
+            OAuth2AuthorizedClient oAuth2AuthorizedClient =
+                    oAuth2AuthorizedClientService.loadAuthorizedClient(entity.getPrincipal().getClientRegistrationId(), entity.getPrincipal().getPrincipalName());
+
+            if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null
+                    || oAuth2AuthorizedClient.getRefreshToken() == null || oAuth2AuthorizedClient.getAccessToken().getExpiresAt() == null) {
+                log.warn("OAuth2AuthorizedClient@OUTLOOK 数据非法, 无法更新Token");
+                return;
+            }
+
+            // 提前十分钟更新
+            Instant expirationTime = Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt());
+            if (expirationTime.isAfter(Instant.now().minus(10, ChronoUnit.MINUTES))) {
+                return;
+            }
+
+            // 手动刷新令牌
+            String clientId = Apps.OUTLOOK.CLIENT_ID;
+            String clientSecret = Apps.OUTLOOK.CLIENT_SECRET;
+            String tenantMicrosoft = Apps.OUTLOOK.APPLICATION_NAME;
+            String authorizationUri = oAuth2ClientProperties.getProvider().get("microsoft").getAuthorizationUri();
+            Set<String> scopes = oAuth2ClientProperties.getRegistration().get("microsoft").getScope();
+
+            OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
+            OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
+
+            assert authorizationUri != null;
+            assert Objects.requireNonNull(refreshToken).getTokenValue() != null;
+
+            ConfidentialClientApplication app;
+            try {
+                app = ConfidentialClientApplication.builder(clientId, ClientCredentialFactory.createFromSecret(clientSecret))
+                        .authority(authorizationUri)
+                        .build();
+
+                RefreshTokenParameters parameters = RefreshTokenParameters.builder(scopes, refreshToken.getTokenValue())
+                        .tenant(tenantMicrosoft)
+                        .build();
+
+                IAuthenticationResult authenticationResult = app.acquireToken(parameters).join();
+
+                if (authenticationResult == null) {
+                    log.error("请求Graph数据失败.无法更新.");
+                    return;
+                }
+
+                String newAccessToken = authenticationResult.accessToken();
+                Instant expiresDate = authenticationResult.expiresOnDate().toInstant();
+
+                OAuth2AccessToken updatedAccessToken = new OAuth2AccessToken(
+                        accessToken.getTokenType(),
+                        newAccessToken,
+                        expiresDate.minusMillis(expiresDate.toEpochMilli() - Objects.requireNonNull(accessToken.getExpiresAt()).toEpochMilli()),
+                        expiresDate
+                );
+
+                OAuth2AuthorizedClient updatedClient = new OAuth2AuthorizedClient(
+                        oAuth2AuthorizedClient.getClientRegistration(),
+                        oAuth2AuthorizedClient.getPrincipalName(),
+                        updatedAccessToken,
+                        refreshToken
+                );
+
+                oAuth2AuthorizedClientService.saveAuthorizedClient(updatedClient, new Authentication() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return List.of();
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return oAuth2AuthorizedClient.getPrincipalName();
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return true;
                     }
 
                     @Override
                     public String getName() {
                         return oAuth2AuthorizedClient.getPrincipalName();
                     }
+
+                    @Override
+                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+                    }
+
+
                 });
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (MalformedURLException exception) {
+                log.error("refreshOutLook:", exception);
             }
+
         }
     }
 
-    void refreshOutLook(List<OAuth2AuthorizedClientEntity> authorizedClientEntities) {
-    }
 
 }

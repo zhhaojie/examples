@@ -38,7 +38,7 @@ public class NotificationController {
     @Resource
     private OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
     @Resource
-    private CalvChannelsRepository calvChannelsRepository;
+    private SubscriptionsRepository subscriptionsRepository;
 
     //
     // 处理graph的请求
@@ -77,7 +77,7 @@ public class NotificationController {
     }
 
     void getGoogleEvents(String channelId, String resourceId) {
-        CalvChannelsEntity channelsEntity = calvChannelsRepository.findByChannelIdAndResourceId(channelId, resourceId);
+        SubscriptionsEntity channelsEntity = subscriptionsRepository.findBySubscriptionIdAndResourceId(channelId, resourceId);
         if (channelsEntity == null) {
             return;
         }
@@ -134,7 +134,7 @@ public class NotificationController {
                         log.warn("Invalid sync token for channelId: {}, resourceId: {}, clearing event store and re-syncing.", channelId, resourceId);
                         nextSyncToken = null;
                         channelsEntity.setNextSyncToken(null);
-                        calvChannelsRepository.save(channelsEntity);
+                        subscriptionsRepository.save(channelsEntity);
                     } else {
                         log.error("Error syncing events for channelId: {}, resourceId: {}: {}", channelId, resourceId, e.getMessage());
                         throw e;  // 重新抛出异常以便于上层处理
@@ -144,7 +144,7 @@ public class NotificationController {
 
             if (nextSyncToken != null) {
                 channelsEntity.setNextSyncToken(nextSyncToken);
-                calvChannelsRepository.save(channelsEntity);
+                subscriptionsRepository.save(channelsEntity);
             }
 
         } catch (IOException | GeneralSecurityException e) {
@@ -152,7 +152,7 @@ public class NotificationController {
         }
     }
 
-    OAuth2AuthorizedClient getOAuth2AuthorizedClient(CalvChannelsEntity channelsEntity) {
+    OAuth2AuthorizedClient getOAuth2AuthorizedClient(SubscriptionsEntity channelsEntity) {
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(channelsEntity.getClientRegistrationId(), channelsEntity.getPrincipalName());
         if (oAuth2AuthorizedClient != null && oAuth2AuthorizedClient.getAccessToken() != null) {
             Instant expirationTime = oAuth2AuthorizedClient.getAccessToken().getExpiresAt();
@@ -178,7 +178,7 @@ public class NotificationController {
 
     @PostMapping("/notifications/outlook")
     public ResponseEntity<String> outlook(@RequestBody @NonNull final String jsonPayload) {
-        System.out.println("Outlook callback payload: " + jsonPayload);
+        System.out.println("OUTLOOK callback payload: " + jsonPayload);
         return ResponseEntity.ok().body("");
     }
 

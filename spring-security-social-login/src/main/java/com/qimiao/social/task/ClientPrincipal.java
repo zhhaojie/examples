@@ -9,10 +9,10 @@ import java.util.Objects;
 @Embeddable
 public class ClientPrincipal {
 
-    @Column(name = "client_registration_id", nullable = false)
+    @Column(nullable = false)
     private String clientRegistrationId;
 
-    @Column(name = "principal_name", nullable = false)
+    @Column(nullable = false)
     private String principalName;
 
     public ClientPrincipal(String clientRegistrationId, String principalName) {

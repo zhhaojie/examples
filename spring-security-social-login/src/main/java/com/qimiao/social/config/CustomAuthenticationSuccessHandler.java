@@ -3,6 +3,7 @@ package com.qimiao.social.config;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 import java.io.IOException;
 
+@Slf4j
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
@@ -38,15 +40,15 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
             if (authorizedClient != null) {
                 OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
-                System.out.println("Access Token: " + accessToken.getTokenValue());
-                System.out.println("Access Token Issued At: " + accessToken.getIssuedAt());
-                System.out.println("Access Token Expires At: " + accessToken.getExpiresAt());
-                System.out.println("Access Token Scopes: " + accessToken.getScopes());
+                log.info("Access Token: {}", accessToken.getTokenValue());
+                log.info("Access Token Issued At: {}", accessToken.getIssuedAt());
+                log.info("Access Token Expires At: {}", accessToken.getExpiresAt());
+                log.info("Access Token Scopes: {}", accessToken.getScopes());
 
                 OAuth2RefreshToken refreshToken = authorizedClient.getRefreshToken();
                 if (refreshToken != null) {
-                    System.out.println("Refresh Token: " + refreshToken.getTokenValue());
-                    System.out.println("Refresh Token Issued At: " + refreshToken.getIssuedAt());
+                    log.info("Refresh Token: {}", refreshToken.getTokenValue());
+                    log.info("Refresh Token Issued At: {}", refreshToken.getIssuedAt());
                 }
 
                 eventPublisher.publishEvent(authorizedClient);
