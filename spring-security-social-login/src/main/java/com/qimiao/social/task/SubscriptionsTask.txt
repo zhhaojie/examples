@@ -154,9 +154,6 @@ public class SubscriptionsTask {
                 subscriptionsEntity.setSubscriptionId(result.getId());
                 subscriptionsEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
                 subscriptionsEntity.setExpiresAt(Objects.requireNonNull(result.getExpirationDateTime()).toInstant().toEpochMilli());
-                subscriptionsEntity.setResourceUri(result.getNotificationUrlAppId());
-                subscriptionsEntity.setResourceId(result.getResource());
-                subscriptionsEntity.setRemark(result.getApplicationId());
                 subscriptionsRepository.save(subscriptionsEntity);
             }
 
@@ -236,5 +233,197 @@ public class SubscriptionsTask {
         }
     }
 
+
+    void initChannel(OAuth2AuthorizedClient oAuth2AuthorizedClient) {
+        if (Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt()).isBefore(Instant.now())) {
+            return;
+        }
+
+        String clientRegistrationId = oAuth2AuthorizedClient.getClientRegistration().getRegistrationId();
+        String principalName = oAuth2AuthorizedClient.getPrincipalName();
+
+        if ("google".equals(clientRegistrationId)) {
+
+            Calendar service = new Calendar.Builder(
+                    new NetHttpTransport(),
+                    JSON_FACTORY,
+                    new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(oAuth2AuthorizedClient.getAccessToken().getTokenValue()))
+                    .setApplicationName(Apps.GOOGLE.APPLICATION_NAME)
+                    .build();
+
+            // 获取用户的默认日历
+            CalendarList calendarList = null;
+            CalendarListEntry defaultCalendar = null;
+            try {
+                calendarList = service.calendarList().list().execute();
+                defaultCalendar = calendarList.getItems().stream()
+                        .filter(CalendarListEntry::isPrimary)
+                        .findFirst()
+                        .orElse(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (defaultCalendar == null) {
+                return;
+            }
+
+            String calvId = defaultCalendar.getId();
+
+            // 检查是否已存在对应的订阅
+            SubscriptionsEntity existingSubscription = subscriptionsRepository.findByClientRegistrationIdAndCalvIdAndPrincipalName(
+                    clientRegistrationId, calvId, principalName);
+
+            // 如果订阅还没有过期.就不要重复订阅. 它的处理逻辑和outlook的不一样.
+            if (existingSubscription != null && existingSubscription.nonExpired()) {
+                return;
+            }
+
+            try {
+                Map<String, String> params = new HashMap<>();
+                Channel channel = new Channel()
+                        .setId(TsidCreator.getTsid().toString())
+                        .setType("web_hook")
+                        .setAddress(Apps.GOOGLE.CALL_BACK_URL)
+                        .setParams(params)
+                        .setExpiration(Instant.now().toEpochMilli() + 7L * 24L * 60L * 60L * 1000L);
+
+                Channel result = service.events().watch(calvId, channel).execute();
+
+                if (result != null && result.getId() != null) {
+                    // 保存订阅信息
+                    SubscriptionsEntity subscriptionsEntity = new SubscriptionsEntity();
+                    if (subscriptionsEntity.getId() == null) {
+                        subscriptionsEntity.setId(TsidCreator.getTsid().toLong());
+                    }
+                    subscriptionsEntity.setPrincipalName(principalName);
+                    subscriptionsEntity.setCalvId(defaultCalendar.getId());
+                    subscriptionsEntity.setClientRegistrationId(clientRegistrationId);
+                    subscriptionsEntity.setNotificationUrl(Apps.GOOGLE.CALL_BACK_URL);
+                    subscriptionsEntity.setSubscriptionId(result.getId());
+                    subscriptionsEntity.setResourceUri(result.getResourceUri());
+                    subscriptionsEntity.setResourceId(result.getResourceId());
+                    if (result.getExpiration() != null) {
+                        subscriptionsEntity.setExpiresAt(result.getExpiration());
+                    }
+                    subscriptionsEntity.setRemark("ClientId#" + result.getKind());
+
+                    subscriptionsRepository.save(subscriptionsEntity);
+                }
+            } catch (IOException exception) {
+                log.error("SubscriptionsTask.google().watch:", exception);
+            }
+
+        }
+
+        if ("microsoft".equals(clientRegistrationId)) {
+
+            SimpleGraphAuthProvider simpleGraphAuthProvider = new SimpleGraphAuthProvider(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
+            GraphServiceClient graphClient = new GraphServiceClient(simpleGraphAuthProvider);
+            CalendarCollectionResponse calendarCollectionResponse = graphClient.me().calendars().get();
+            if (calendarCollectionResponse == null || calendarCollectionResponse.getValue() == null) {
+                return;
+            }
+
+            // 获取用户的默认日历
+            com.microsoft.graph.models.Calendar defaultCalendar = calendarCollectionResponse.getValue().stream()
+                    .filter(calendar -> Boolean.TRUE.equals(calendar.getIsDefaultCalendar()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (defaultCalendar == null) {
+                return;
+            }
+
+            // 检查是否已存在对应的订阅
+            SubscriptionsEntity existingSubscription = subscriptionsRepository.findByClientRegistrationIdAndCalvIdAndPrincipalName(
+                    clientRegistrationId, defaultCalendar.getId(), principalName);
+
+            try {
+                // 创建或更新订阅
+                Subscription subscription = new Subscription();
+                subscription.setChangeType("created,updated,deleted");
+                subscription.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
+                subscription.setResource("me/events");
+                subscription.setExpirationDateTime(OffsetDateTime.now(ZoneOffset.UTC).plusHours(24 * 3));
+                subscription.setClientState(TsidCreator.getTsid().toString());
+
+                Subscription result;
+                if (existingSubscription == null) {
+                    result = graphClient.subscriptions().post(subscription);
+                } else {
+                    result = graphClient.subscriptions().bySubscriptionId(existingSubscription.getSubscriptionId()).patch(subscription);
+                }
+
+                if (result == null) {
+                    return;
+                }
+
+                // 保存订阅信息
+                SubscriptionsEntity subscriptionsEntity = (existingSubscription == null) ? new SubscriptionsEntity() : existingSubscription;
+                if (subscriptionsEntity.getId() == null) {
+                    subscriptionsEntity.setId(TsidCreator.getTsid().toLong());
+                }
+
+                subscriptionsEntity.setPrincipalName(principalName);
+                subscriptionsEntity.setCalvId(defaultCalendar.getId());
+                subscriptionsEntity.setClientRegistrationId(clientRegistrationId);
+                subscriptionsEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
+                subscriptionsEntity.setSubscriptionId(result.getId());
+                subscriptionsEntity.setResourceUri(result.getResource());
+                subscriptionsEntity.setResourceId(result.getNotificationUrlAppId());
+                if (result.getExpirationDateTime() != null) {
+                    subscriptionsEntity.setExpiresAt(result.getExpirationDateTime().toInstant().toEpochMilli());
+                }
+                subscriptionsEntity.setRemark("ClientId#" + result.getApplicationId());
+
+                subscriptionsRepository.save(subscriptionsEntity);
+            } catch (RuntimeException exception) {
+                log.error("SubscriptionsTask.microsoft().watch:", exception);
+            }
+        }
+
+    }
+
+    void cleanChannel() {
+
+        // 已经取得到了某个用户的token数据. (token 数据需要定期刷新)
+        OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
+                "microsoft", "00000000-0000-0000-1bc9-b513b1153f74");
+        if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
+            return;
+        }
+
+        OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
+        SimpleGraphAuthProvider simpleGraphAuthProvider = new SimpleGraphAuthProvider(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
+        GraphServiceClient graphClient1 = new GraphServiceClient(simpleGraphAuthProvider);
+        CalendarCollectionResponse calendarCollectionResponse1 = graphClient1.me().calendars().get();
+        for (com.microsoft.graph.models.Calendar c : calendarCollectionResponse1.getValue()) {
+            System.out.println(c.getName());
+        }
+
+        System.out.println(accessToken.getTokenValue());
+
+//        final String[] scopes = new String[]{"offline_access",
+//                "openid",
+//                "email",
+//                "profile",
+//                "Calendars.Read",
+//                "Channel.Create",
+//                "Channel.Delete.All",
+//                "Channel.ReadBasic.All"};
+//        OnBehalfOfCredential credential = new OnBehalfOfCredentialBuilder()
+//                .clientId(Apps.OUTLOOK.CLIENT_ID)
+//                .clientSecret(Apps.OUTLOOK.CLIENT_SECRET)
+//                .tenantId(Apps.OUTLOOK.TENANT_ID)
+//                .userAssertion(accessToken.getTokenValue())
+//                .build();
+//        GraphServiceClient graphClient2 = new GraphServiceClient(credential, scopes);
+//        CalendarCollectionResponse calendarCollectionResponse2 = graphClient2.me().calendars().get();
+//        for (com.microsoft.graph.models.Calendar c : calendarCollectionResponse2.getValue()) {
+//            System.out.println(c.getName());
+//        }
+
+    }
 
 }
