@@ -35,10 +35,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,10 +51,12 @@ public class SubscriptionsTask {
     OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
     @Resource
     SubscriptionsRepository subscriptionsRepository;
+    @Resource
+    ChannelCalendarListRepository channelCalendarListRepository;
 
     @SneakyThrows
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
-    void renewChannel() {
+    void renewSubscriptions() {
         long startTime = System.currentTimeMillis();
         log.info("renewChannel started at {}", LocalDateTime.now());
 
@@ -65,7 +64,7 @@ public class SubscriptionsTask {
         Page<SubscriptionsEntity> resultPage;
         do {
             resultPage = subscriptionsRepository.findAll(pageable);
-            renewChannels(resultPage.getContent());
+            subscriptions(resultPage.getContent());
             pageable = resultPage.nextPageable();
         } while (resultPage.hasNext());
 
@@ -74,18 +73,18 @@ public class SubscriptionsTask {
         log.info("renewChannel took {} milliseconds", endTime - startTime);
     }
 
-    void renewChannels(List<SubscriptionsEntity> channels) {
-        channels.forEach(this::renewSingleChannel);
+    void subscriptions(List<SubscriptionsEntity> subscriptionsEntities) {
+        subscriptionsEntities.forEach(this::renewSingleChannel);
     }
 
-    void renewSingleChannel(SubscriptionsEntity channelEntity) {
+    void renewSingleChannel(SubscriptionsEntity subscriptionsEntity) {
         // 订阅关系没有过期
-        if (channelEntity == null || channelEntity.nonExpired()) {
+        if (subscriptionsEntity == null || subscriptionsEntity.nonExpired()) {
             return;
         }
 
         OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
-                channelEntity.getClientRegistrationId(), channelEntity.getPrincipalName());
+                subscriptionsEntity.getClientRegistrationId(), subscriptionsEntity.getPrincipalName());
         if (oAuth2AuthorizedClient == null || oAuth2AuthorizedClient.getAccessToken() == null) {
             return;
         }
@@ -95,14 +94,14 @@ public class SubscriptionsTask {
             return;
         }
 
-        if ("google".equals(channelEntity.getClientRegistrationId())) {
-            renewGoogleChannel(channelEntity, oAuth2AuthorizedClient);
-        } else if ("microsoft".equals(channelEntity.getClientRegistrationId())) {
-            renewOutlookChannel(channelEntity, oAuth2AuthorizedClient);
+        if ("google".equals(subscriptionsEntity.getClientRegistrationId())) {
+            renewGoogleChannel(subscriptionsEntity, oAuth2AuthorizedClient);
+        } else if ("microsoft".equals(subscriptionsEntity.getClientRegistrationId())) {
+            renewOutlookChannel(subscriptionsEntity, oAuth2AuthorizedClient);
         }
     }
 
-    void renewGoogleChannel(SubscriptionsEntity channelEntity, OAuth2AuthorizedClient oAuth2AuthorizedClient) {
+    void renewGoogleChannel(SubscriptionsEntity subscriptionsEntity, OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         Calendar calendar = new Calendar.Builder(
                 new NetHttpTransport(),
@@ -121,19 +120,19 @@ public class SubscriptionsTask {
 
 
         try {
-            Channel result = calendar.events().watch(channelEntity.getCalvId(), channel).execute();
+            Channel result = calendar.events().watch(subscriptionsEntity.getCalvId(), channel).execute();
             if (result != null) {
                 System.out.println("Watch Kind : " + result.getKind());
                 System.out.println("Watch Channel ID: " + result.getId());
                 System.out.println("Watch Resource ID: " + result.getResourceId());
 
-                channelEntity.setSubscriptionId(result.getId());
-                channelEntity.setNotificationUrl(Apps.GOOGLE.CALL_BACK_URL);
-                channelEntity.setResourceUri(result.getResourceUri());
-                channelEntity.setResourceId(result.getResourceId());
-                channelEntity.setExpiresAt(result.getExpiration());
-                channelEntity.setRemark(result.getKind());
-                subscriptionsRepository.save(channelEntity);
+                subscriptionsEntity.setSubscriptionId(result.getId());
+                subscriptionsEntity.setNotificationUrl(Apps.GOOGLE.CALL_BACK_URL);
+                subscriptionsEntity.setResourceUri(result.getResourceUri());
+                subscriptionsEntity.setResourceId(result.getResourceId());
+                subscriptionsEntity.setExpiresAt(result.getExpiration());
+                subscriptionsEntity.setRemark(result.getKind());
+                subscriptionsRepository.save(subscriptionsEntity);
             }
 
         } catch (Exception e) {
@@ -141,7 +140,7 @@ public class SubscriptionsTask {
         }
     }
 
-    void renewOutlookChannel(SubscriptionsEntity channelEntity, OAuth2AuthorizedClient oAuth2AuthorizedClient) {
+    void renewOutlookChannel(SubscriptionsEntity subscriptionsEntity, OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         SimpleGraphAuthProvider simpleGraphAuthProvider = new SimpleGraphAuthProvider(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
         GraphServiceClient graphClient = new GraphServiceClient(simpleGraphAuthProvider);
@@ -151,12 +150,12 @@ public class SubscriptionsTask {
             subscription.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
             OffsetDateTime expirationDateTime = OffsetDateTime.now(ZoneOffset.UTC);
             subscription.setExpirationDateTime(expirationDateTime.plusHours(24 * 3));
-            var result = graphClient.subscriptions().bySubscriptionId(channelEntity.getSubscriptionId()).patch(subscription);
+            var result = graphClient.subscriptions().bySubscriptionId(subscriptionsEntity.getSubscriptionId()).patch(subscription);
             if (result != null) {
-                channelEntity.setSubscriptionId(result.getId());
-                channelEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
-                channelEntity.setExpiresAt(Objects.requireNonNull(result.getExpirationDateTime()).toInstant().toEpochMilli());
-                subscriptionsRepository.save(channelEntity);
+                subscriptionsEntity.setSubscriptionId(result.getId());
+                subscriptionsEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
+                subscriptionsEntity.setExpiresAt(Objects.requireNonNull(result.getExpirationDateTime()).toInstant().toEpochMilli());
+                subscriptionsRepository.save(subscriptionsEntity);
             }
 
         } catch (Exception e) {
@@ -166,6 +165,76 @@ public class SubscriptionsTask {
     }
 
     @EventListener(OAuth2AuthorizedClient.class)
+    void saveUserCalendarList(OAuth2AuthorizedClient oAuth2AuthorizedClient) {
+        if (Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt()).isBefore(Instant.now())) {
+            return;
+        }
+        String clientRegistrationId = oAuth2AuthorizedClient.getClientRegistration().getRegistrationId();
+        String principalName = oAuth2AuthorizedClient.getPrincipalName();
+
+        if ("google".equals(clientRegistrationId)) {
+            Calendar service = new Calendar.Builder(
+                    new NetHttpTransport(),
+                    JSON_FACTORY,
+                    new Credential(BearerToken.authorizationHeaderAccessMethod()).setAccessToken(oAuth2AuthorizedClient.getAccessToken().getTokenValue()))
+                    .setApplicationName(Apps.GOOGLE.APPLICATION_NAME)
+                    .build();
+            try {
+                CalendarList calendarList = service.calendarList().list().execute();
+                for (CalendarListEntry entry : calendarList.getItems()) {
+                    ChannelCalendarList registrationIdAndCalvId = channelCalendarListRepository.findByClientRegistrationIdAndCalvId(clientRegistrationId, entry.getId());
+
+                    ChannelCalendarList channelCalendarList = registrationIdAndCalvId != null ? registrationIdAndCalvId : new ChannelCalendarList();
+                    if (registrationIdAndCalvId == null) {
+                        channelCalendarList.setId(TsidCreator.getTsid().toLong());
+                    }
+                    if (!entry.isDeleted()) {
+                        channelCalendarList.setCalvName(entry.getSummary());
+                        channelCalendarList.setClientRegistrationId(clientRegistrationId);
+                        channelCalendarList.setCanDelete(false);
+                        channelCalendarList.setCanEdit(false);
+                        channelCalendarList.setPrincipalName(principalName);
+                        channelCalendarList.setCalvId(entry.getId());
+                        channelCalendarList.setDefault(entry.isPrimary());
+                        channelCalendarListRepository.save(channelCalendarList);
+                    }
+                }
+            } catch (IOException e) {
+                log.error("saveUserCalendarList:", e);
+            }
+
+        }
+
+        if ("microsoft".equals(clientRegistrationId)) {
+            SimpleGraphAuthProvider simpleGraphAuthProvider = new SimpleGraphAuthProvider(oAuth2AuthorizedClient.getAccessToken().getTokenValue());
+            GraphServiceClient graphClient = new GraphServiceClient(simpleGraphAuthProvider);
+            CalendarCollectionResponse calendarCollectionResponse = graphClient.me().calendars().get();
+            if (calendarCollectionResponse == null || calendarCollectionResponse.getValue() == null) {
+                return;
+            }
+
+            for (com.microsoft.graph.models.Calendar calendar : calendarCollectionResponse.getValue()) {
+                ChannelCalendarList registrationIdAndCalvId = channelCalendarListRepository.findByClientRegistrationIdAndCalvId(clientRegistrationId, calendar.getId());
+
+                ChannelCalendarList channelCalendarList = registrationIdAndCalvId != null ? registrationIdAndCalvId : new ChannelCalendarList();
+                if (registrationIdAndCalvId == null) {
+                    channelCalendarList.setId(TsidCreator.getTsid().toLong());
+                }
+                if (Boolean.FALSE.equals(calendar.getIsRemovable())) {
+                    channelCalendarList.setCalvName(calendar.getName());
+                    channelCalendarList.setClientRegistrationId(clientRegistrationId);
+                    channelCalendarList.setCanDelete(false);
+                    channelCalendarList.setCanEdit(false);
+                    channelCalendarList.setPrincipalName(principalName);
+                    channelCalendarList.setCalvId(calendar.getId());
+                    channelCalendarList.setDefault(Boolean.TRUE.equals(calendar.getIsDefaultCalendar()));
+                    channelCalendarListRepository.save(channelCalendarList);
+                }
+            }
+        }
+    }
+
+
     void initChannel(OAuth2AuthorizedClient oAuth2AuthorizedClient) {
         if (Objects.requireNonNull(oAuth2AuthorizedClient.getAccessToken().getExpiresAt()).isBefore(Instant.now())) {
             return;
@@ -230,7 +299,6 @@ public class SubscriptionsTask {
                     }
                     subscriptionsEntity.setPrincipalName(principalName);
                     subscriptionsEntity.setCalvId(defaultCalendar.getId());
-                    subscriptionsEntity.setCalvName(defaultCalendar.getSummary());
                     subscriptionsEntity.setClientRegistrationId(clientRegistrationId);
                     subscriptionsEntity.setNotificationUrl(Apps.GOOGLE.CALL_BACK_URL);
                     subscriptionsEntity.setSubscriptionId(result.getId());
@@ -300,7 +368,6 @@ public class SubscriptionsTask {
 
                 subscriptionsEntity.setPrincipalName(principalName);
                 subscriptionsEntity.setCalvId(defaultCalendar.getId());
-                subscriptionsEntity.setCalvName(defaultCalendar.getName());
                 subscriptionsEntity.setClientRegistrationId(clientRegistrationId);
                 subscriptionsEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
                 subscriptionsEntity.setSubscriptionId(result.getId());
@@ -319,7 +386,6 @@ public class SubscriptionsTask {
 
     }
 
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     void cleanChannel() {
 
         // 已经取得到了某个用户的token数据. (token 数据需要定期刷新)

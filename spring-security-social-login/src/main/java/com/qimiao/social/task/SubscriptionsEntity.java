@@ -32,36 +32,32 @@ public class SubscriptionsEntity {
     @Column(nullable = false)
     private String clientRegistrationId;
 
-    @Comment("calvId")
+    @Comment("第三方日历主键")
     @Column(nullable = false)
     private String calvId;
 
-    @Comment("calvName")
-    @Column(nullable = false)
-    private String calvName;
-
-    @Comment("resourceUri")
-    private String resourceUri;
-
-    @Comment("resourceId")
-    private String resourceId;
-
-    @Comment("subscriptionId")
-    @Column(nullable = false)
-    private String subscriptionId;
-
-    @Comment("expiresAt")
-    @Column(nullable = false)
-    private Long expiresAt;
-
-    @Comment("remark")
-    private String remark;
-
-    @Comment("principalName")
+    @Comment("第三方账号ID")
     @Column(nullable = false)
     private String principalName;
 
-    @Comment("notificationUrl")
+    @Comment("订阅ID(第三方返回)")
+    @Column(nullable = false)
+    private String subscriptionId;
+
+    @Comment("订阅资源URI(第三方返回)")
+    private String resourceUri;
+
+    @Comment("订阅资源ID(第三方返回)")
+    private String resourceId;
+
+    @Comment("订阅超时时长")
+    @Column(nullable = false)
+    private Long expiresAt;
+
+    @Comment("备注")
+    private String remark;
+
+    @Comment("回调地址")
     @Column(nullable = false)
     private String notificationUrl;
 
@@ -70,6 +66,7 @@ public class SubscriptionsEntity {
 
     @LastModifiedDate
     @JsonIgnore
+    @Comment("上一次同步时间")
     private Instant lastSyncAt;
 
     public boolean nonExpired() {

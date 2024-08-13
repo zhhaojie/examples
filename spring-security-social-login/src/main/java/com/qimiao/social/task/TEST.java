@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class X {
+public class TEST {
 
     private static final String CLIENT_ID = "a1a42d95-2a30-495e-ab6e-311e9611b801";
     private static final String CLIENT_SECRET = "4bs8Q~CRCzVd_qACFaLOv5tFUWhpaUHDSpAKJahj";

@@ -198,7 +198,7 @@ class RefreshAccessTokenTask {
             // 手动刷新令牌
             String clientId = Apps.OUTLOOK.CLIENT_ID;
             String clientSecret = Apps.OUTLOOK.CLIENT_SECRET;
-            String tenantMicrosoft = Apps.OUTLOOK.APPLICATION_NAME;
+            String tenantMicrosoft = Apps.OUTLOOK.TENANT_ID;
             String authorizationUri = oAuth2ClientProperties.getProvider().get("microsoft").getAuthorizationUri();
             Set<String> scopes = oAuth2ClientProperties.getRegistration().get("microsoft").getScope();
 

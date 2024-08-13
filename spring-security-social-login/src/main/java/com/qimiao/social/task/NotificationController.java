@@ -46,7 +46,7 @@ public class NotificationController {
 
     @PostMapping("/notifications/google")
     public ResponseEntity<Void> google(HttpServletRequest request) {
-        System.out.println("google callback");
+        log.info("Google Callback");
 
         String channelId = request.getHeader("X-Goog-Channel-ID");
         String resourceId = request.getHeader("X-Goog-Resource-ID");
@@ -54,11 +54,12 @@ public class NotificationController {
         String resourceUri = request.getHeader("X-Goog-Resource-URI");
         String messageNumber = request.getHeader("X-Goog-Message-Number");
 
-        System.out.println("channelId: " + channelId);
-        System.out.println("resourceId: " + resourceId);
-        System.out.println("resourceState: " + resourceState);
-        System.out.println("messageNumber: " + messageNumber);
-        System.out.println("-----------");
+        log.info("channelId: {}", channelId);
+        log.info("resourceId: {}", resourceId);
+        log.info("resourceUri: {}", resourceUri);
+        log.info("resourceState: {}", resourceState);
+        log.info("messageNumber: {}", messageNumber);
+        log.info("-----------");
 
         switch (resourceState) {
             case "sync":
@@ -176,17 +177,16 @@ public class NotificationController {
     // 处理graph的请求
     //
 
-    @PostMapping("/notifications/outlook")
-    public ResponseEntity<String> outlook(@RequestBody @NonNull final String jsonPayload) {
-        System.out.println("OUTLOOK callback payload: " + jsonPayload);
-        return ResponseEntity.ok().body("");
-    }
-
     @PostMapping(value = "/notifications/outlook", headers = {"content-type=text/plain"})
     @ResponseBody
     public ResponseEntity<String> handleValidation(@RequestParam(value = "validationToken") final String validationToken) {
-        System.out.println("handleValidation: " + validationToken);
         return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(validationToken);
+    }
+
+    @PostMapping("/notifications/outlook")
+    public ResponseEntity<String> outlook(@RequestBody @NonNull final String jsonPayload) {
+        log.info("Graph Callback:{}", jsonPayload);
+        return ResponseEntity.ok().body("");
     }
 
 }
