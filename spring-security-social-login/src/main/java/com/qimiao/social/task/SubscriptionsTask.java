@@ -52,7 +52,7 @@ public class SubscriptionsTask {
     ChannelCalendarListRepository channelCalendarListRepository;
 
     @SneakyThrows
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     void extendSubscriptions() {
         long startTime = System.currentTimeMillis();
         log.info("renewChannel started at {}", LocalDateTime.now());
