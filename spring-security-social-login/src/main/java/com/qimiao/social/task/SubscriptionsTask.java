@@ -1,7 +1,5 @@
 package com.qimiao.social.task;
 
-import com.azure.identity.OnBehalfOfCredential;
-import com.azure.identity.OnBehalfOfCredentialBuilder;
 import com.github.f4b6a3.tsid.TsidCreator;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
@@ -27,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -56,7 +53,7 @@ public class SubscriptionsTask {
 
     @SneakyThrows
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
-    void renewSubscriptions() {
+    void extendSubscriptions() {
         long startTime = System.currentTimeMillis();
         log.info("renewChannel started at {}", LocalDateTime.now());
 
@@ -74,10 +71,10 @@ public class SubscriptionsTask {
     }
 
     void subscriptions(List<SubscriptionsEntity> subscriptionsEntities) {
-        subscriptionsEntities.forEach(this::renewSingleChannel);
+        subscriptionsEntities.forEach(this::extendSingleChannel);
     }
 
-    void renewSingleChannel(SubscriptionsEntity subscriptionsEntity) {
+    void extendSingleChannel(SubscriptionsEntity subscriptionsEntity) {
         // 订阅关系没有过期
         if (subscriptionsEntity == null || subscriptionsEntity.nonExpired()) {
             return;
@@ -126,11 +123,10 @@ public class SubscriptionsTask {
                 System.out.println("Watch Resource ID: " + result.getResourceId());
 
                 subscriptionsEntity.setSubscriptionId(result.getId());
-                subscriptionsEntity.setNotificationUrl(Apps.GOOGLE.CALL_BACK_URL);
+                subscriptionsEntity.setEndpoint(Apps.GOOGLE.CALL_BACK_URL);
                 subscriptionsEntity.setResourceUri(result.getResourceUri());
                 subscriptionsEntity.setResourceId(result.getResourceId());
                 subscriptionsEntity.setExpiresAt(result.getExpiration());
-                subscriptionsEntity.setRemark(result.getKind());
                 subscriptionsRepository.save(subscriptionsEntity);
             }
 
@@ -152,11 +148,10 @@ public class SubscriptionsTask {
             var result = graphClient.subscriptions().bySubscriptionId(subscriptionsEntity.getSubscriptionId()).patch(subscription);
             if (result != null) {
                 subscriptionsEntity.setSubscriptionId(result.getId());
-                subscriptionsEntity.setNotificationUrl(Apps.OUTLOOK.CALL_BACK_URL);
+                subscriptionsEntity.setEndpoint(Apps.OUTLOOK.CALL_BACK_URL);
                 subscriptionsEntity.setExpiresAt(Objects.requireNonNull(result.getExpirationDateTime()).toInstant().toEpochMilli());
                 subscriptionsEntity.setResourceUri(result.getNotificationUrlAppId());
                 subscriptionsEntity.setResourceId(result.getResource());
-                subscriptionsEntity.setRemark(result.getApplicationId());
                 subscriptionsRepository.save(subscriptionsEntity);
             }
 

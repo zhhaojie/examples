@@ -44,6 +44,13 @@ public class SubscriptionsEntity {
     @Column(nullable = false)
     private String subscriptionId;
 
+    @Comment("注册的应用ID")
+    private String applicationId;
+
+    @Comment("我方提供的回调入口")
+    @Column(nullable = false)
+    private String endpoint;
+
     @Comment("订阅资源URI(第三方返回)")
     private String resourceUri;
 
@@ -53,13 +60,6 @@ public class SubscriptionsEntity {
     @Comment("订阅超时时长")
     @Column(nullable = false)
     private Long expiresAt;
-
-    @Comment("备注")
-    private String remark;
-
-    @Comment("回调地址")
-    @Column(nullable = false)
-    private String notificationUrl;
 
     @Comment("在每次同步后，获取 nextSyncToken 并存储，以便在下一次同步时使用")
     private String nextSyncToken;
