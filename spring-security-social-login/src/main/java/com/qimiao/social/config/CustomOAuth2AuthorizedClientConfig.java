@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-public class CustomOAuth2AuthorizedClient {
+public class CustomOAuth2AuthorizedClientConfig {
 
     @Resource
     private DataSource dataSource;
