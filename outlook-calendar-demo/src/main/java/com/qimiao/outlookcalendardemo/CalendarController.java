@@ -41,6 +41,7 @@ public class CalendarController {
 
         model.addAttribute("events", events);
 
+
         return "calendar";
     }
 
