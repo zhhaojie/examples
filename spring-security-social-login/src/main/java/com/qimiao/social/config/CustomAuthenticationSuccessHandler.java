@@ -40,6 +40,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
             if (authorizedClient != null) {
                 OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+                log.info("Principal: {}", oauthUser.getName());
                 log.info("Access Token: {}", accessToken.getTokenValue());
                 log.info("Access Token Issued At: {}", accessToken.getIssuedAt());
                 log.info("Access Token Expires At: {}", accessToken.getExpiresAt());
@@ -49,6 +50,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                 if (refreshToken != null) {
                     log.info("Refresh Token: {}", refreshToken.getTokenValue());
                     log.info("Refresh Token Issued At: {}", refreshToken.getIssuedAt());
+                    log.info("Refresh Token Expires At: {}", refreshToken.getExpiresAt());
                 }
 
                 eventPublisher.publishEvent(authorizedClient);
