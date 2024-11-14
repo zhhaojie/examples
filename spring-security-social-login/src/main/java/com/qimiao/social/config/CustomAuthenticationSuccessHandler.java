@@ -12,10 +12,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -38,6 +41,13 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             OAuth2AuthorizedClient authorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(
                     authorizedClientRegistrationId, oauthToken.getName());
 
+            if (oauthUser instanceof OidcUser oidcUser) {
+                OidcIdToken idToken = oidcUser.getIdToken();
+                log.info("ID Token: {}", idToken.getTokenValue());
+                log.info("ID Token Issued At: {}", idToken.getIssuedAt());
+                log.info("ID Token Expires At: {}", idToken.getExpiresAt());
+            }
+
             if (authorizedClient != null) {
                 OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
                 log.info("Principal: {}", oauthUser.getName());
@@ -52,7 +62,6 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                     log.info("Refresh Token Issued At: {}", refreshToken.getIssuedAt());
                     log.info("Refresh Token Expires At: {}", refreshToken.getExpiresAt());
                 }
-
                 eventPublisher.publishEvent(authorizedClient);
             }
 

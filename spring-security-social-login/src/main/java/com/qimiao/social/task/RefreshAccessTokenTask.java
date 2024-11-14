@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
@@ -198,7 +197,7 @@ class RefreshAccessTokenTask {
             // 手动刷新令牌
             String clientId = Apps.OUTLOOK.CLIENT_ID;
             String clientSecret = Apps.OUTLOOK.CLIENT_SECRET;
-            String tenantMicrosoft = Apps.OUTLOOK.TENANT_ID;
+            String tenantID = Apps.OUTLOOK.TENANT_ID;
             String authorizationUri = oAuth2ClientProperties.getProvider().get("microsoft").getAuthorizationUri();
             Set<String> scopes = oAuth2ClientProperties.getRegistration().get("microsoft").getScope();
 
@@ -208,14 +207,13 @@ class RefreshAccessTokenTask {
             assert authorizationUri != null;
             assert Objects.requireNonNull(refreshToken).getTokenValue() != null;
 
-            ConfidentialClientApplication app;
             try {
-                app = ConfidentialClientApplication.builder(clientId, ClientCredentialFactory.createFromSecret(clientSecret))
+                ConfidentialClientApplication app = ConfidentialClientApplication.builder(clientId, ClientCredentialFactory.createFromSecret(clientSecret))
                         .authority(authorizationUri)
                         .build();
 
                 RefreshTokenParameters parameters = RefreshTokenParameters.builder(scopes, refreshToken.getTokenValue())
-                        .tenant(tenantMicrosoft)
+                        .tenant(tenantID)
                         .build();
 
                 IAuthenticationResult authenticationResult = app.acquireToken(parameters).join();
