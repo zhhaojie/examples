@@ -19,6 +19,7 @@
         <module>spring-data-jdbc-example</module>
         <module>spring-data-redis-example</module>
         <module>spring-resource-io-example</module>
+        <module>talk-to-customer-support-agent</module>
     </modules>
 
 

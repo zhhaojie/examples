@@ -1,0 +1,20 @@
+langchain4j:
+  redis:
+    host: 192.168.124.3
+    password:
+    port: 6379
+  ollama:
+    chat-model:
+      base-url: http://192.168.124.3:11434
+      model-name: qwen2.5:7b
+      log-requests: true
+      log-responses: true
+      temperature: 0.0
+
+logging:
+  level:
+    root: debug
+    dev.langchain4j: debug
+    dev:
+      langchain4j:
+        model: warn
