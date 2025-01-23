@@ -18,7 +18,7 @@ public class RunExample {
     private CleanDirtyTask cleanDirtyTask;
 
     @Resource
-    CreateProductTask createProductTask;
+    private CreateProductTask createProductTask;
 
     @EventListener
     public void onApplicationReady(ApplicationReadyEvent event) throws InterruptedException {
