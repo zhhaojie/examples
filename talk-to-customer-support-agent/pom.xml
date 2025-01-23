@@ -18,6 +18,25 @@
         <java.version>17</java.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <dependency>
@@ -41,6 +60,12 @@
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>
             <version>1.0.0-alpha1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>1.0.0-M5</version>
         </dependency>
 
         <dependency>

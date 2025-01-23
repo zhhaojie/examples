@@ -1,5 +1,6 @@
 package dev.langchain4j.example;
 
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.SystemMessage;

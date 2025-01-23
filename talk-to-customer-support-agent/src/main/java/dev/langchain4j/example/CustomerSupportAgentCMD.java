@@ -1,5 +1,6 @@
 package dev.langchain4j.example;
 
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.output.FinishReason;
 import dev.langchain4j.service.Result;
 import lombok.extern.slf4j.Slf4j;
