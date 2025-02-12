@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CustomerSupportAgentApplication implements CommandLineRunner {
 
     @Resource
-    private CustomerSupportAgentCMD agentCMD;
+    private CustomerSupportAgentStartup agentCMD;
 
     public static void main(String[] args) {
         SpringApplication.run(CustomerSupportAgentApplication.class, args);

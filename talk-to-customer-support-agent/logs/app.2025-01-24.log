@@ -1,11 +1,11 @@
-2025-01-31 13:05:10 [main] ERROR o.s.boot.SpringApplication - Application run failed
-java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+2025-01-24 22:42:53 [main] ERROR o.s.boot.SpringApplication - Application run failed
+java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"deepseek-reasoner does not support Function Calling","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
 	at dev.langchain4j.internal.RetryUtils$RetryPolicy.withRetry(RetryUtils.java:195)
 	at dev.langchain4j.internal.RetryUtils.withRetry(RetryUtils.java:229)
 	at dev.langchain4j.model.openai.OpenAiChatModel.doChat(OpenAiChatModel.java:297)
 	at dev.langchain4j.model.openai.OpenAiChatModel.chat(OpenAiChatModel.java:203)
 	at dev.langchain4j.service.DefaultAiServices$1.invoke(DefaultAiServices.java:227)
-	at jdk.proxy2/jdk.proxy2.$Proxy62.answer(Unknown Source)
+	at jdk.proxy2/jdk.proxy2.$Proxy61.answer(Unknown Source)
 	at dev.langchain4j.example.CustomerSupportAgentCMD.start(CustomerSupportAgentCMD.java:41)
 	at dev.langchain4j.example.CustomerSupportAgentApplication.run(CustomerSupportAgentApplication.java:20)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:788)
@@ -28,15 +28,52 @@ java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"me
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
 	at dev.langchain4j.example.CustomerSupportAgentApplication.main(CustomerSupportAgentApplication.java:15)
-Caused by: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+Caused by: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"deepseek-reasoner does not support Function Calling","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
 	at dev.ai4j.openai4j.Utils.toException(Utils.java:8)
 	at dev.ai4j.openai4j.SyncRequestExecutor.execute(SyncRequestExecutor.java:28)
 	at dev.ai4j.openai4j.RequestExecutor.execute(RequestExecutor.java:59)
 	at dev.langchain4j.model.openai.OpenAiChatModel.lambda$doChat$5(OpenAiChatModel.java:297)
 	at dev.langchain4j.internal.RetryUtils$RetryPolicy.withRetry(RetryUtils.java:192)
 	... 27 common frames omitted
-2025-01-31 13:06:12 [main] ERROR o.s.boot.SpringApplication - Application run failed
-java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+2025-01-24 22:58:27 [main] ERROR o.s.boot.SpringApplication - Application run failed
+java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Messages with role 'tool' must be a response to a preceding message with 'tool_calls'","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
+	at dev.langchain4j.internal.RetryUtils$RetryPolicy.withRetry(RetryUtils.java:195)
+	at dev.langchain4j.internal.RetryUtils.withRetry(RetryUtils.java:229)
+	at dev.langchain4j.model.openai.OpenAiChatModel.doChat(OpenAiChatModel.java:297)
+	at dev.langchain4j.model.openai.OpenAiChatModel.chat(OpenAiChatModel.java:203)
+	at dev.langchain4j.service.DefaultAiServices$1.invoke(DefaultAiServices.java:282)
+	at jdk.proxy2/jdk.proxy2.$Proxy62.answer(Unknown Source)
+	at dev.langchain4j.example.CustomerSupportAgentCMD.start(CustomerSupportAgentCMD.java:41)
+	at dev.langchain4j.example.CustomerSupportAgentApplication.run(CustomerSupportAgentApplication.java:20)
+	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:788)
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:82)
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:86)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:796)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:787)
+	at org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:772)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:557)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:546)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:611)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:772)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:325)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at dev.langchain4j.example.CustomerSupportAgentApplication.main(CustomerSupportAgentApplication.java:15)
+Caused by: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Messages with role 'tool' must be a response to a preceding message with 'tool_calls'","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
+	at dev.ai4j.openai4j.Utils.toException(Utils.java:8)
+	at dev.ai4j.openai4j.SyncRequestExecutor.execute(SyncRequestExecutor.java:28)
+	at dev.ai4j.openai4j.RequestExecutor.execute(RequestExecutor.java:59)
+	at dev.langchain4j.model.openai.OpenAiChatModel.lambda$doChat$5(OpenAiChatModel.java:297)
+	at dev.langchain4j.internal.RetryUtils$RetryPolicy.withRetry(RetryUtils.java:192)
+	... 27 common frames omitted
+2025-01-24 22:59:33 [main] ERROR o.s.boot.SpringApplication - Application run failed
+java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Model Not Exist","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
 	at dev.langchain4j.internal.RetryUtils$RetryPolicy.withRetry(RetryUtils.java:195)
 	at dev.langchain4j.internal.RetryUtils.withRetry(RetryUtils.java:229)
 	at dev.langchain4j.model.openai.OpenAiChatModel.doChat(OpenAiChatModel.java:297)
@@ -65,7 +102,7 @@ java.lang.RuntimeException: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"me
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
 	at dev.langchain4j.example.CustomerSupportAgentApplication.main(CustomerSupportAgentApplication.java:15)
-Caused by: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+Caused by: dev.ai4j.openai4j.OpenAiHttpException: {"error":{"message":"Model Not Exist","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
 	at dev.ai4j.openai4j.Utils.toException(Utils.java:8)
 	at dev.ai4j.openai4j.SyncRequestExecutor.execute(SyncRequestExecutor.java:28)
 	at dev.ai4j.openai4j.RequestExecutor.execute(RequestExecutor.java:59)

@@ -1,7 +1,5 @@
 package dev.langchain4j.example;
 
-import dev.langchain4j.model.chat.response.ChatResponse;
-import dev.langchain4j.model.output.FinishReason;
 import dev.langchain4j.service.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,11 +9,11 @@ import java.util.Scanner;
 
 @Slf4j
 @Component
-public class CustomerSupportAgentCMD {
+public class CustomerSupportAgentStartup {
 
     private final CustomerSupportAgent customerSupportAgent;
 
-    public CustomerSupportAgentCMD(CustomerSupportAgent customerSupportAgent) {
+    public CustomerSupportAgentStartup(CustomerSupportAgent customerSupportAgent) {
         this.customerSupportAgent = customerSupportAgent;
     }
 

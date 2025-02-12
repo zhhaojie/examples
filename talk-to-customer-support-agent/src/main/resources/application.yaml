@@ -14,7 +14,7 @@ langchain4j:
     chat-model:
       base-url: https://api.deepseek.com
       model-name: deepseek-chat
-      api-key: sk-****
+      api-key: sk-ee9b5e20d4f546e18f83aadf69d79d82
 
 logging:
   level:
